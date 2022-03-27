@@ -5,15 +5,12 @@ import { Users } from "./Users";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 let queryClient = new QueryClient();
-function Stuff() {
+function App() {
   return (
     <div className="App">
       <Users />
     </div>
   );
-}
-function App() {
-  return <Stuff />;
 }
 
 export default App;
