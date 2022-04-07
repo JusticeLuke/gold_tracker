@@ -1,7 +1,12 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework import permissions
-from gold_tracker.gold_tracker_api.serializers import UserSerializer, GroupSerializer
+from gold_tracker.gold_tracker_api.models import Party
+from gold_tracker.gold_tracker_api.serializers import (
+    UserSerializer,
+    GroupSerializer,
+    PartySerializer,
+)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -22,3 +27,9 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+
+class PartyViewSet(viewsets.ModelViewSet):
+
+    queryset = Party.objects.all()
+    serializer_class = PartySerializer

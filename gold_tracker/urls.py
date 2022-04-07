@@ -19,6 +19,7 @@ from django.urls import include, path
 from rest_framework import routers
 from gold_tracker.gold_tracker_api import views
 
+
 router = routers.DefaultRouter()
 router.register(r"users", views.UserViewSet)
 router.register(r"groups", views.GroupViewSet)
@@ -27,4 +28,21 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include(router.urls)),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
+    path(
+        "partys",
+        views.PartyViewSet.as_view({"get": "list", "post": "create"}),
+        name="party-list",
+    ),
+    path(
+        "partys/<int:pk>",
+        views.PartyViewSet.as_view(
+            {
+                "get": "retrieve",
+                "put": "update",
+                "patch": "partial_update",
+                "delete": "destroy",
+            }
+        ),
+        name="party-detail",
+    ),
 ]
