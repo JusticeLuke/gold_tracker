@@ -2,8 +2,8 @@ import React from "react";
 import { Query, useQuery } from "react-query";
 
 export function Users() {
-  let { data, isLoading, error } = useQuery("users", () => {
-    return fetch("http://localhost:8000/users", {
+  let { data, isLoading, error } = useQuery("partys", () => {
+    return fetch("http://localhost:8000/partys", {
       headers: { authorization: "Basic " + window.btoa("admin:Sonic2306") },
     }).then((response) => response.json());
   });
@@ -20,6 +20,6 @@ export function Users() {
 }
 
 function DataFormat(props: any) {
-  let username = props.userData.results[0].username;
+  let username = props.userData.results[0].name;
   return <p>USERNAME: {username} </p>;
 }
