@@ -83,28 +83,20 @@ WSGI_APPLICATION = "gold_tracker.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# DBNAME = os.environ.get("DBNAME")
-# DBHOST = os.environ.get("DBHOST")
-# DBUSER = os.environ.get("DBUSER")
-# DBPASS = os.environ.get("DBPASS")
+DBNAME = os.environ.get("DBNAME")
+DBHOST = os.environ.get("DBHOST")
+DBUSER = os.environ.get("DBUSER")
+DBPASS = os.environ.get("DBPASS")
 
-# if any([var is None for var in [DBNAME, DBHOST, DBUSER, DBPASS]]):
-#     raise ValueError("Please export all database environment variables.")
+if any([var is None for var in [DBNAME, DBHOST, DBUSER, DBPASS]]):
+    raise ValueError("Please export all database environment variables.")
 DATABASES = {
-    # "default": {
-    #     "ENGINE": "django.db.backends.postgresql",
-    #     "NAME": os.environ["DBNAME"],
-    #     "HOST": os.environ["DBHOST"],
-    #     "USER": os.environ["DBUSER"],
-    #     "PASSWORD": os.environ["DBPASS"],
-    #     "PORT": "5432",
-    # }
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "goldtrackerdb",
-        "HOST": "goldtracker-server.postgres.database.azure.com",
-        "USER": "goldtrackeradmin",
-        "PASSWORD": os.environ["DBPASS"],
+        "NAME": DBNAME,
+        "HOST": DBHOST,
+        "USER": DBUSER,
+        "PASSWORD": DBPASS,
         "PORT": "5432",
         "OPTIONS": {"sslmode": "require"},
     }
