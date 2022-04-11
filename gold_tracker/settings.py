@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,11 @@ SECRET_KEY = "django-insecure-q+l_zn*oe+4#k@d%*z=5#hr2gh*h61(2ca4agcw(svg922*e(6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "goldtracker.azurewebsites.net",
+    "127.0.0.1",
+    "localhost",
+]
 
 
 # Application definition
@@ -44,6 +49,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -73,17 +79,34 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "gold_tracker.wsgi.application"
 
-
+# .env is not read correctly? I can pull the password correctly, but when
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DBNAME = os.environ.get("DBNAME")
+# DBHOST = os.environ.get("DBHOST")
+# DBUSER = os.environ.get("DBUSER")
+# DBPASS = os.environ.get("DBPASS")
+
+# if any([var is None for var in [DBNAME, DBHOST, DBUSER, DBPASS]]):
+#     raise ValueError("Please export all database environment variables.")
 DATABASES = {
+    # "default": {
+    #     "ENGINE": "django.db.backends.postgresql",
+    #     "NAME": os.environ["DBNAME"],
+    #     "HOST": os.environ["DBHOST"],
+    #     "USER": os.environ["DBUSER"],
+    #     "PASSWORD": os.environ["DBPASS"],
+    #     "PORT": "5432",
+    # }
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "OPTIONS": {
-            "service": "goldtracker",
-            "passfile": ".pgpass",
-        },
+        "NAME": "goldtrackerdb",
+        "HOST": "goldtracker-server.postgres.database.azure.com",
+        "USER": "goldtrackeradmin",
+        "PASSWORD": os.environ["DBPASS"],
+        "PORT": "5432",
+        "OPTIONS": {"sslmode": "require"},
     }
 }
 
@@ -131,7 +154,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
+STATICFILES_DIRS = (str(BASE_DIR.joinpath("static")),)
+
 STATIC_URL = "static/"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

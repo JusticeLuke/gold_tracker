@@ -1,3 +1,36 @@
 {
-    "python.formatting.provider": "black"
+  "python.formatting.provider": "black",
+  "appService.defaultWebAppToDeploy": "/subscriptions/6b74bfd7-f01c-4138-8d9a-56af3fe55efd/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/gold-tracker",
+  "appService.deploySubpath": ".",
+  "appService.zipIgnorePattern": [
+    "__pycache__{,/**}",
+    "*.py[cod]",
+    "*$py.class",
+    ".Python{,/**}",
+    "build{,/**}",
+    "develop-eggs{,/**}",
+    "dist{,/**}",
+    "downloads{,/**}",
+    "eggs{,/**}",
+    ".eggs{,/**}",
+    "lib{,/**}",
+    "lib64{,/**}",
+    "parts{,/**}",
+    "sdist{,/**}",
+    "var{,/**}",
+    "wheels{,/**}",
+    "share/python-wheels{,/**}",
+    "*.egg-info{,/**}",
+    ".installed.cfg",
+    "*.egg",
+    "MANIFEST",
+    ".env{,/**}",
+    ".venv{,/**}",
+    "env{,/**}",
+    "venv{,/**}",
+    "ENV{,/**}",
+    "env.bak{,/**}",
+    "venv.bak{,/**}",
+    ".vscode{,/**}"
+  ]
 }

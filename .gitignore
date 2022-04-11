@@ -138,3 +138,7 @@ GitHub.sublime-settings
 
 # Passwords  #
 .credentials
+gold_tracker/.pgpass
+
+#Personal Notes
+gold_tracker_notes.txt
