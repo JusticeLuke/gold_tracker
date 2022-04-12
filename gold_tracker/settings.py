@@ -29,6 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "goldtracker.azurewebsites.net",
     "127.0.0.1",
+    "witty-cliff-0a4e9b70f.1.azurestaticapps.net",
     "localhost",
 ]
 
