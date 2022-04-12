@@ -2,7 +2,6 @@ import React from "react";
 import "./App.css";
 import { LoginForm } from "./components/LoginForm";
 import { Users } from "./components/Users";
-import { QueryClient } from "react-query";
 
 function App() {
   return (
