@@ -4,7 +4,7 @@ export function LoginForm() {
       <h1>LOGIN FORM</h1>
       <form>
         <div className="form-group">
-          <label>Email address</label>
+          <label>FEMALE address</label>
           <input
             type="email"
             className="form-control"
