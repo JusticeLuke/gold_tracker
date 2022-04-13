@@ -12,9 +12,9 @@ import os
 from django.core.wsgi import get_wsgi_application
 
 settings_module = (
-    "azureproject.production"
+    "gold_tracker.production"
     if "WEBSITE_HOSTNAME" in os.environ
-    else "azureproject.settings"
+    else "gold_tracker.settings"
 )
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "gold_tracker.settings")
 
