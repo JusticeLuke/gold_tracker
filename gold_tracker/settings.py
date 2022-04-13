@@ -16,6 +16,9 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+SECURE_SSL_REDIRECT = False
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -30,7 +33,7 @@ ALLOWED_HOSTS = [
     "goldtracker.azurewebsites.net",
     "127.0.0.1",
     "witty-cliff-0a4e9b70f.1.azurestaticapps.net",
-    "localhost",
+    "localhost:3000",
 ]
 
 

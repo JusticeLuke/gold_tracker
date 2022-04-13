@@ -6,6 +6,9 @@ import os
 # Configure the domain name using the environment variable
 # that Azure automatically creates for us.
 BASE_DIR = Path(__file__).resolve().parent.parent
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
 
 ALLOWED_HOSTS = (
     [os.environ["WEBSITE_HOSTNAME"]] if "WEBSITE_HOSTNAME" in os.environ else []

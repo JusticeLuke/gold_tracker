@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 export function Users() {
   let user = process.env.REACT_APP_DJANGO_USER;
   let pass = process.env.REACT_APP_DJANGO_PASS;
+
   let { data, isLoading, error } = useQuery("partys", () => {
     return fetch("https://goldtracker.azurewebsites.net/partys", {
       headers: { authorization: "Basic" + window.btoa(user + ":" + pass) },
