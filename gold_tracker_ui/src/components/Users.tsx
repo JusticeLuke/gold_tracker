@@ -4,9 +4,13 @@ import { useQuery } from "react-query";
 export function Users() {
   let user = process.env.REACT_APP_DJANGO_USER;
   let pass = process.env.REACT_APP_DJANGO_PASS;
+  let env_url = "http://localhost:8000/";
 
+  if (window.location.href.includes("goldtracker.azurewebsites")) {
+    env_url = "https://goldtracker.azurewebsites.net/";
+  }
   let { data, isLoading, error } = useQuery("partys", () => {
-    return fetch("https://goldtracker.azurewebsites.net/partys", {
+    return fetch(env_url + "partys", {
       headers: { authorization: "Basic" + window.btoa(user + ":" + pass) },
     }).then((response) => response.json());
   });
