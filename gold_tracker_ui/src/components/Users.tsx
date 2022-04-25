@@ -4,10 +4,10 @@ import { useQuery } from "react-query";
 export function Users() {
   let user = process.env.REACT_APP_DJANGO_USER;
   let pass = process.env.REACT_APP_DJANGO_PASS;
-  let env_url = "http://localhost:8000/";
-
-  if (window.location.href.includes("goldtracker.azurewebsites")) {
-    env_url = "https://goldtracker.azurewebsites.net/";
+  let env_url = "https://goldtracker.azurewebsites.net/";
+  console.log(window.location.href);
+  if (window.location.href.includes("localhost")) {
+    env_url = "http://localhost:3000/";
   }
   let { data, isLoading, error } = useQuery("partys", () => {
     return fetch(env_url + "partys", {

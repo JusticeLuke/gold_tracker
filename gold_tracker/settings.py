@@ -70,7 +70,9 @@ ROOT_URLCONF = "gold_tracker.gold_tracker_api.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [
+            os.path.join(BASE_DIR, "gold_tracker_ui/templates"),
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -153,9 +155,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATICFILES_DIRS = (str(BASE_DIR.joinpath("static")),)
+STATICFILES_DIRS = (str(BASE_DIR.joinpath("gold_tracker_ui/static")),)
 
-STATIC_URL = "static/"
+STATIC_URL = "gold_tracker_ui/static/"
 
 
 # Default primary key field type
