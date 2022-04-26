@@ -1,14 +1,15 @@
 import React from "react";
-import LoginForm from "./accounts/LoginForm";
+import LoginForm from "./accounts/Login";
 import Navbar from "./navbar/Navbar";
-import { Users } from "./Users";
+import { Outlet } from "react-router-dom";
+import Grid from "@mui/material/Grid";
 
 function App() {
   return (
-    <div className="App">
+    <Grid container>
       <Navbar />
-      <LoginForm />
-    </div>
+      <Outlet />
+    </Grid>
   );
 }
 

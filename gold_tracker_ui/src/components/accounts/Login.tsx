@@ -12,6 +12,7 @@ import TextField from "@mui/material/TextField";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Button from "@material-ui/core/Button";
+import Grid from "@mui/material/Grid";
 
 interface State {
   amount: string;
@@ -21,7 +22,7 @@ interface State {
   showPassword: boolean;
 }
 
-export default function LoginForm() {
+export default function Login() {
   const [values, setValues] = React.useState<State>({
     amount: "",
     password: "",
@@ -49,9 +50,11 @@ export default function LoginForm() {
   };
 
   return (
-    <Box
+    <Grid
+      item
+      xs={12}
       sx={{
-        marginTop: 8,
+        margin: 8,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -92,6 +95,6 @@ export default function LoginForm() {
           Sign In
         </Button>
       </div>
-    </Box>
+    </Grid>
   );
 }

@@ -28,7 +28,7 @@ export const mainNavbarItems = [
     id: 3,
     icon: <PublicIcon />,
     label: "Logout",
-    route: "logout",
+    route: "login", //placeholder update when you figure out how to logout
   },
   {
     id: 4,
