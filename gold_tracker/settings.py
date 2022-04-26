@@ -47,9 +47,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    "gold_tracker.accounts",
     "gold_tracker.gold_tracker_api",
-    "knox",
     "corsheaders",
 ]
 
@@ -133,7 +131,6 @@ CORS_ALLOWED_ORIGINS = [
 
 # Controls how many objects per page are returned
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
 }

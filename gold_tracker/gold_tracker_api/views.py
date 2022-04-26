@@ -30,12 +30,6 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 
 class PartyViewSet(viewsets.ModelViewSet):
-
+    queryset = Party.objects.all()
     serializer_class = PartySerializer
     permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        return self.request.user.partys.all()
-
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)

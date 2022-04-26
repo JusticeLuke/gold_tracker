@@ -45,5 +45,4 @@ urlpatterns = [
         ),
         name="party-detail",
     ),
-    path("", include("gold_tracker.accounts.urls")),
 ]
