@@ -2,8 +2,8 @@ import React from "react";
 import { useQuery } from "react-query";
 
 export function Users() {
-  let user = process.env.REACT_APP_DJANGO_USER;
-  let pass = process.env.REACT_APP_DJANGO_PASS;
+  let user = "admin";
+  let pass = "sonic2306";
   let env_url = "http://localhost:8000/";
 
   if (window.location.href.includes("goldtracker.azurewebsites")) {
