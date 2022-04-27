@@ -6,7 +6,6 @@ import Login from "./components/accounts/Login";
 import Register from "./components/accounts/Register";
 import MonsterGen from "./components/suite/MonsterGen";
 import PartyManager from "./components/suite/PartyManager";
-import reportWebVitals from "./reportWebVitals";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
