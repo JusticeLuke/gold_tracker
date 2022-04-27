@@ -8,6 +8,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import { mainNavbarItems } from "./constants/navbarItems";
+import { navbarStyles } from "./NavbarStyles";
 import { useParams, useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
@@ -16,18 +17,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   return (
-    <Drawer
-      sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        "& .MuiDrawer-paper": {
-          width: drawerWidth,
-          boxSizing: "border-box",
-        },
-      }}
-      variant="permanent"
-      anchor="left"
-    >
+    <Drawer sx={navbarStyles.drawer} variant="permanent" anchor="left">
       <Toolbar />
       <Divider />
       <List>
