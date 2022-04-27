@@ -8,7 +8,7 @@ export const mainNavbarItems = [
   {
     id: 0,
     icon: <PeopleIcon />,
-    label: "Partys",
+    label: "Gold Tracker",
     route: "partys",
   },
   {
@@ -17,6 +17,9 @@ export const mainNavbarItems = [
     label: "Monster Generator",
     route: "monsterGen",
   },
+];
+
+export const userNavbarItems = [
   {
     id: 2,
     icon: <ImageIcon />,
