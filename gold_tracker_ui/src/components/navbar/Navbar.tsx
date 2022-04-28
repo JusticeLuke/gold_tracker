@@ -11,6 +11,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import CommonButton from "../common/commonButton/CommonButton";
 import { mainNavbarItems, userNavbarItems } from "./constants/navbarItems";
 import { useNavigate } from "react-router-dom";
 
@@ -47,7 +48,7 @@ const Navbar = () => {
             component="div"
             sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
           >
-            LOGO
+            LJ
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -80,7 +81,13 @@ const Navbar = () => {
               }}
             >
               {mainNavbarItems.map((item, index): any => (
-                <MenuItem key={item.label} onClick={handleCloseNavMenu}>
+                <MenuItem
+                  key={item.label}
+                  onClick={() => {
+                    navigate(item.route);
+                    handleCloseNavMenu();
+                  }}
+                >
                   <Typography textAlign="center">{item.label}</Typography>
                 </MenuItem>
               ))}
@@ -92,7 +99,7 @@ const Navbar = () => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
           >
-            LOGO
+            LJ
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {mainNavbarItems.map((item, index) => (
@@ -112,7 +119,7 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Username" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
             <Menu

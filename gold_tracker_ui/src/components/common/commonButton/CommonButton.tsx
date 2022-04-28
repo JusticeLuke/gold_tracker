@@ -8,6 +8,7 @@ const CommonButton = ({
   size,
   sx,
   variant,
+  onClick,
 }: any) => {
   return (
     <Button
@@ -16,6 +17,7 @@ const CommonButton = ({
       size={size}
       sx={sx}
       variant={variant}
+      onClick={onClick}
     >
       {children}
     </Button>
