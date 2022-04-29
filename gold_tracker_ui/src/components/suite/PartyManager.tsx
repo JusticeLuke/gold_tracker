@@ -7,7 +7,7 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import IconButton from "@mui/material/IconButton";
 import CommonButton from "../common/commonButton/CommonButton";
 import GridWrapper from "../common/gridWrapper/GridWrapper";
-import BasicModal from "../common/basicModal/BasicModal";
+import NewPartyModal from "../modal/NewPartyModal";
 
 const PartyManager = () => {
   const [open, setOpen] = useState(false);
@@ -73,7 +73,7 @@ const PartyManager = () => {
   return (
     <GridWrapper item xs={8} sx={{ margin: "auto" }}>
       <BasicCard header={getSearchHeader()} content={getContent()} />
-      <BasicModal
+      <NewPartyModal
         open={open}
         onClose={() => {
           setOpen(false);
