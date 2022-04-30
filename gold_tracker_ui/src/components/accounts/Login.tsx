@@ -9,21 +9,18 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import CommonButton from "../common/commonButton/CommonButton";
 import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
 
 interface State {
-  amount: string;
+  username: string;
   password: string;
-  weight: string;
-  weightRange: string;
   showPassword: boolean;
 }
 
 export default function Login() {
   const [values, setValues] = React.useState<State>({
-    amount: "",
+    username: "",
     password: "",
-    weight: "",
-    weightRange: "",
     showPassword: false,
   });
 
@@ -45,6 +42,10 @@ export default function Login() {
     event.preventDefault();
   };
 
+  const signInClick = () => {
+    console.log(values.username + " " + values.password);
+  };
+
   return (
     <Grid
       item
@@ -59,6 +60,8 @@ export default function Login() {
       <TextField
         label="Username"
         id="outlined-start-adornment"
+        value={values.username}
+        onChange={handleChange("username")}
         sx={{ m: 1, width: "25ch" }}
       />
       <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
@@ -83,9 +86,16 @@ export default function Login() {
           label="Password"
         />
       </FormControl>
-      <CommonButton variant={"contained"} color={"primary"}>
+      <CommonButton
+        variant={"contained"}
+        color={"primary"}
+        onClick={signInClick}
+      >
         Sign In
       </CommonButton>
+      <Link href="register" sx={{ m: 1 }}>
+        Register Here
+      </Link>
     </Grid>
   );
 }
