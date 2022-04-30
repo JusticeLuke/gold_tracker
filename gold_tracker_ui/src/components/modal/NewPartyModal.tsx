@@ -39,6 +39,7 @@ const NewPartyModal = ({ open, onClose, addNewParty }: any) => {
   };
 
   //Validates string user input
+  /* eslint-disable */
   let validRegEx = /(?!.*[\.\-\_]{2,})^[a-zA-Z0-9\.\-\_\ \&\$\#]{1,60}$/gm;
 
   const validateInput = (value: any) => {

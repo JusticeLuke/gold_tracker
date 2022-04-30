@@ -37,7 +37,7 @@ const PartyManager = () => {
         <SearchBar
           placeholder="Search by party name or id"
           onChange={(event: any) => handleChange(event.target.value)}
-          searchBarWidth={"500px"}
+          searchBarWidth={"45vw"}
         />
         <Box>
           <CommonButton
