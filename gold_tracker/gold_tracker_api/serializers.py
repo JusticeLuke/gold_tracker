@@ -18,4 +18,4 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class PartySerializer(serializers.ModelSerializer):
     class Meta:
         model = Party
-        fields = ["id", "name", "anon_gold"]
+        fields = ["id", "name", "anon_gold", "anon_silver", "anon_copper"]
