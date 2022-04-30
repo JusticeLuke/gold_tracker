@@ -15,9 +15,8 @@ const PartyManager = () => {
     const handleChange = (value: any) => {
       console.log(value);
     };
-    const addParty = () => {
+    const addPartyModal = () => {
       setOpen(true);
-      console.log("click me");
     };
 
     const searchHeaderStyles = {
@@ -44,7 +43,7 @@ const PartyManager = () => {
           <CommonButton
             sx={searchHeaderStyles.addParty}
             variant="contained"
-            onClick={addParty}
+            onClick={addPartyModal}
             size={"large"}
           >
             Add Party
@@ -56,7 +55,9 @@ const PartyManager = () => {
       </Box>
     );
   };
-
+  const addNewParty = (data: any) => {
+    console.log(data);
+  };
   const getContent = () => (
     <Typography
       align="center"
@@ -78,6 +79,7 @@ const PartyManager = () => {
         onClose={() => {
           setOpen(false);
         }}
+        addNewParty={addNewParty}
       />
     </GridWrapper>
   );
