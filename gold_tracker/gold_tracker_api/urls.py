@@ -18,7 +18,7 @@ from django.urls import include, path
 
 from rest_framework import routers
 from gold_tracker.gold_tracker_api import views
-
+from accounts.urls import accounts_urlpatterns
 
 router = routers.DefaultRouter()
 router.register(r"users", views.UserViewSet)
@@ -46,3 +46,5 @@ urlpatterns = [
         name="party-detail",
     ),
 ]
+
+urlpatterns += accounts_urlpatterns

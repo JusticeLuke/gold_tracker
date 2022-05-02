@@ -94,7 +94,7 @@ export default function Login() {
         Sign In
       </CommonButton>
       <Link href="register" sx={{ m: 1 }}>
-        Register Here
+        Create new account
       </Link>
     </Grid>
   );
