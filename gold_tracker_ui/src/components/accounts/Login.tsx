@@ -22,7 +22,7 @@ interface State {
 
 export default function Login() {
   let navigate = useNavigate();
-  let location = useLocation();
+  //let location = useLocation();
   let auth = useAuth();
 
   const [values, setValues] = React.useState<State>({

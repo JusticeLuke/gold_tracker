@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useNavigate, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { fakeAuthProvider } from "./AuthUser";
 
 interface AuthContextType {
