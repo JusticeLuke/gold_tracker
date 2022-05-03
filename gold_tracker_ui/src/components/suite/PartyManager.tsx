@@ -8,9 +8,11 @@ import IconButton from "@mui/material/IconButton";
 import CommonButton from "../common/commonButton/CommonButton";
 import GridWrapper from "../common/gridWrapper/GridWrapper";
 import NewPartyModal from "../modal/NewPartyModal";
+import { useAuth } from "../../actions/userActions/AuthProvider";
 
 const PartyManager = () => {
   const [open, setOpen] = useState(false);
+  let auth = useAuth();
   const getSearchHeader = () => {
     const handleChange = (value: any) => {
       console.log(value);
@@ -35,7 +37,7 @@ const PartyManager = () => {
     return (
       <Box sx={searchHeaderStyles.wrapper}>
         <SearchBar
-          placeholder="Search by party name or id"
+          placeholder={"Search by party name or id"}
           onChange={(event: any) => handleChange(event.target.value)}
           searchBarWidth={"45vw"}
         />
@@ -67,8 +69,7 @@ const PartyManager = () => {
         fontSize: "1.3rem",
       }}
     >
-      {" "}
-      No partys for this user
+      No partys for {auth.user}
     </Typography>
   );
   return (

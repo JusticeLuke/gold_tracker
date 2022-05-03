@@ -23,17 +23,17 @@ export const userNavbarItems = [
   {
     id: 2,
     icon: <ImageIcon />,
+    label: "Account",
+    route: "login",
+  },
+  {
+    id: 2,
+    icon: <ImageIcon />,
     label: "Login",
     route: "login",
   },
   {
     id: 3,
-    icon: <PublicIcon />,
-    label: "Logout",
-    route: "login", //placeholder update when you figure out how to logout
-  },
-  {
-    id: 4,
     icon: <SettingsEthernetIcon />,
     label: "Register",
     route: "register",

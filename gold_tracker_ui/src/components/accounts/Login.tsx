@@ -10,18 +10,26 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import CommonButton from "../common/commonButton/CommonButton";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../../actions/userActions/AuthProvider";
 
 interface State {
   username: string;
   password: string;
   showPassword: boolean;
+  from: { pathname: string };
 }
 
 export default function Login() {
+  let navigate = useNavigate();
+  let location = useLocation();
+  let auth = useAuth();
+
   const [values, setValues] = React.useState<State>({
     username: "",
     password: "",
     showPassword: false,
+    from: { pathname: "../partys" }, //who knows if this is right
   });
 
   const handleChange =
@@ -42,9 +50,19 @@ export default function Login() {
     event.preventDefault();
   };
 
-  const signInClick = () => {
-    console.log(values.username + " " + values.password);
-  };
+  function signInClick(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    auth.signin(values.username, () => {
+      // Send them back to the page they tried to visit when they were
+      // redirected to the login page. Use { replace: true } so we don't create
+      // another entry in the history stack for the login page.  This means that
+      // when they get to the protected page and click the back button, they
+      // won't end up back on the login page, which is also really nice for the
+      // user experience.
+      navigate(values.from, { replace: true });
+    });
+  }
 
   return (
     <Grid

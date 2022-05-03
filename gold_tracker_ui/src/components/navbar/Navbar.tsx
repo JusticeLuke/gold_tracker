@@ -13,9 +13,11 @@ import MenuItem from "@mui/material/MenuItem";
 import CommonButton from "../common/commonButton/CommonButton";
 import { mainNavbarItems, userNavbarItems } from "./constants/navbarItems";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../actions/userActions/AuthProvider";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const auth = useAuth();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -118,7 +120,7 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Username" src="/static/images/avatar/2.jpg" />
+                <Avatar alt={auth.user} src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -148,6 +150,13 @@ const Navbar = () => {
                   <Typography textAlign="center">{item.label}</Typography>
                 </MenuItem>
               ))}
+              <MenuItem
+                onClick={() => {
+                  auth.signout(() => navigate("login"));
+                }}
+              >
+                Logout
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

@@ -11,20 +11,29 @@ import { ThemeProvider } from "@mui/material/styles";
 import { AppTheme } from "./AppTheme";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { RequireAuth, AuthProvider } from "./actions/userActions/AuthProvider";
 
 ReactDOM.render(
   <ThemeProvider theme={AppTheme}>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route path="login" element={<Login />}></Route>
-          <Route path="partys" element={<PartyManager />}></Route>
-          <Route path="monsterGen" element={<MonsterGen />}></Route>
-          {/* <Route path="logout" element={}></Route> */}
-          <Route path="register" element={<Register />}></Route>
-          <Route path="*" element={<NoMatch />} />
-        </Route>
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route path="login" element={<Login />}></Route>
+            <Route
+              path="partys"
+              element={
+                <RequireAuth>
+                  <PartyManager />
+                </RequireAuth>
+              }
+            ></Route>
+            <Route path="monsterGen" element={<MonsterGen />}></Route>
+            <Route path="register" element={<Register />}></Route>
+            <Route path="*" element={<NoMatch />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   </ThemeProvider>,
   document.getElementById("root")
