@@ -69,7 +69,7 @@ const PartyManager = () => {
         fontSize: "1.3rem",
       }}
     >
-      No partys for {auth.user}
+      No partys for {auth.username}
     </Typography>
   );
   return (

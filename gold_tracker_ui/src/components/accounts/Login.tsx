@@ -22,7 +22,6 @@ interface State {
 
 export default function Login() {
   let navigate = useNavigate();
-  //let location = useLocation();
   let auth = useAuth();
 
   const [values, setValues] = React.useState<State>({
@@ -52,16 +51,16 @@ export default function Login() {
 
   function signInClick(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
-    auth.signin(values.username, () => {
-      // Send them back to the page they tried to visit when they were
-      // redirected to the login page. Use { replace: true } so we don't create
-      // another entry in the history stack for the login page.  This means that
-      // when they get to the protected page and click the back button, they
-      // won't end up back on the login page, which is also really nice for the
-      // user experience.
-      navigate(values.from, { replace: true });
-    });
+    auth.signin(values);
+    // auth.signin(values.username, () => {
+    //   // Send them back to the page they tried to visit when they were
+    //   // redirected to the login page. Use { replace: true } so we don't create
+    //   // another entry in the history stack for the login page.  This means that
+    //   // when they get to the protected page and click the back button, they
+    //   // won't end up back on the login page, which is also really nice for the
+    //   // user experience.
+    //   navigate(values.from, { replace: true });
+    // });
   }
 
   return (
@@ -75,6 +74,7 @@ export default function Login() {
       }}
     >
       <h2>Login</h2>
+
       <TextField
         label="Username"
         id="outlined-start-adornment"
