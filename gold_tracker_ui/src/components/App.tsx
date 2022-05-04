@@ -15,6 +15,7 @@ function App() {
     } else {
       navigate("partys");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Grid container>

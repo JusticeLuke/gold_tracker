@@ -21,7 +21,6 @@ interface State {
 }
 
 export default function Login() {
-  let navigate = useNavigate();
   let auth = useAuth();
 
   const [values, setValues] = React.useState<State>({
