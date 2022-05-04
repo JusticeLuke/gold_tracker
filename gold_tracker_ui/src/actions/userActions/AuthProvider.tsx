@@ -7,6 +7,7 @@ interface AuthContextType {
   authToken: string;
   signin: any;
   signout: (callback: VoidFunction) => void;
+  register: any;
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -47,13 +48,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  let signout = (callback: VoidFunction) => {
+  let signout = () => {
     localStorage.removeItem("token");
     setUser("");
     setAuthToken(null);
   };
 
-  let value = { username, signin, authToken, signout };
+  let register = async (data: any) => {
+    try {
+      const res = await fetch("http://localhost:8000/api/v1/users/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (res.statusText !== "Created") {
+        throw new Error("Something went wrong.");
+      }
+      navigate("../login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  let value = { username, signin, authToken, signout, register };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

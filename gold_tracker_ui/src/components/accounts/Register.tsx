@@ -10,6 +10,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import CommonButton from "../common/commonButton/CommonButton";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
+import { useAuth } from "../../actions/userActions/AuthProvider";
 
 interface State {
   username: string;
@@ -19,6 +20,7 @@ interface State {
 }
 
 export default function Register() {
+  let auth = useAuth();
   const [values, setValues] = React.useState<State>({
     username: "",
     password: "",
@@ -44,9 +46,10 @@ export default function Register() {
     event.preventDefault();
   };
 
-  const registerClick = () => {
-    console.log(values.username);
-  };
+  function registerClick(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    auth.register(values);
+  }
 
   return (
     <Grid
