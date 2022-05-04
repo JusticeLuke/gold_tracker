@@ -1,18 +1,17 @@
 import * as React from "react";
 import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { AlertMessage } from "../../components/common/alerts/AlertMessage";
 
 interface AuthContextType {
   username: string;
-  logged_in: boolean;
+  authToken: string;
   signin: any;
   signout: (callback: VoidFunction) => void;
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   let [username, setUser] = React.useState<any>(null);
-  let [logged_in, set_logged_in] = React.useState<any>(null);
+  let [authToken, setAuthToken] = React.useState<any>(null);
   let navigate = useNavigate();
 
   let signin = async (data: any) => {
@@ -41,7 +40,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const userJson = await userRes.json();
       console.log(userJson);
       setUser(userJson.username);
-      set_logged_in(true);
+      setAuthToken(token);
       navigate("../partys");
     } catch (error) {
       console.log(error);
@@ -51,10 +50,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   let signout = (callback: VoidFunction) => {
     localStorage.removeItem("token");
     setUser("");
-    set_logged_in(false);
+    setAuthToken(null);
   };
 
-  let value = { username, signin, logged_in, signout };
+  let value = { username, signin, authToken, signout };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
