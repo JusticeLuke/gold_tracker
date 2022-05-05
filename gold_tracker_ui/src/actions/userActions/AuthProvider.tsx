@@ -10,6 +10,11 @@ interface AuthContextType {
   register: any;
 }
 
+const websiteUrl = window.location.href;
+const serverCallUrl =
+  websiteUrl === "witty-cliff"
+    ? "https://goldtracker.azurewebsites.net"
+    : "http://localhost:8000";
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   let [username, setUser] = React.useState<any>(null);
   let [authToken, setAuthToken] = React.useState<any>(null);
@@ -17,6 +22,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   let signin = async (data: any) => {
     try {
+      console.log(serverCallUrl);
       const res = await fetch("http://localhost:8000/api/v1/token/login", {
         method: "POST",
         headers: {
