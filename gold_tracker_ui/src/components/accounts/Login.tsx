@@ -10,7 +10,6 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import CommonButton from "../common/commonButton/CommonButton";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../actions/userActions/AuthProvider";
 
 interface State {
