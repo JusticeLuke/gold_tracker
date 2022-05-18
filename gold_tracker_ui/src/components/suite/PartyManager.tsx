@@ -9,10 +9,11 @@ import CommonButton from "../common/commonButton/CommonButton";
 import GridWrapper from "../common/gridWrapper/GridWrapper";
 import NewPartyModal from "../modal/NewPartyModal";
 import { useAuth } from "../../actions/userActions/AuthProvider";
+import { getPartys } from "../../actions/partyActions/CRUDParty";
+import DataTable from "../common/dataTable/DataTable";
 
 const PartyManager = () => {
   const [open, setOpen] = useState(false);
-  let auth = useAuth();
   const getSearchHeader = () => {
     const handleChange = (value: any) => {
       console.log(value);
@@ -60,6 +61,17 @@ const PartyManager = () => {
   const addNewParty = (data: any) => {
     console.log(data);
   };
+
+  let data = "";
+  const dataGrid = async () => {
+    if (localStorage.getItem("token")) {
+      console.log("getting partys");
+      data = await getPartys(localStorage.getItem("token"));
+      console.log(data);
+    } else {
+      data = "No partys for " + localStorage.getItem("username");
+    }
+  };
   const getContent = () => (
     <Typography
       align="center"
@@ -69,12 +81,15 @@ const PartyManager = () => {
         fontSize: "1.3rem",
       }}
     >
-      No partys for {auth.username}
+      <DataTable />
     </Typography>
   );
   return (
     <GridWrapper item xs={8} sx={{ margin: "auto" }}>
-      <BasicCard header={getSearchHeader()} content={getContent()} />
+      <BasicCard
+        header={getSearchHeader()}
+        content={(dataGrid(), getContent())}
+      />
       <NewPartyModal
         open={open}
         onClose={() => {
