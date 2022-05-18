@@ -10,7 +10,7 @@ function App() {
   let navigate = useNavigate();
 
   useEffect(() => {
-    if (!auth.username) {
+    if (!localStorage.getItem("token")) {
       navigate("login");
     } else {
       navigate("partys");
