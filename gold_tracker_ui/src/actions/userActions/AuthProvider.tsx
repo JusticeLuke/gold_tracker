@@ -11,6 +11,7 @@ interface AuthContextType {
 }
 
 const websiteUrl = window.location.href;
+console.log(websiteUrl);
 const serverCallUrl =
   websiteUrl === "witty-cliff"
     ? "https://goldtracker.azurewebsites.net"

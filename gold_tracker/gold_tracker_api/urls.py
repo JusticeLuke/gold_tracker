@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from gold_tracker.gold_tracker_api.views import UserPartysViewSet
 
 from rest_framework import routers
 from gold_tracker.gold_tracker_api import views
@@ -44,6 +45,11 @@ urlpatterns = [
             }
         ),
         name="party-detail",
+    ),
+    path(
+        "user-partys",
+        views.UserPartysViewSet.as_view({"get": "list", "post": "create"}),
+        name="user-party-list",
     ),
 ]
 

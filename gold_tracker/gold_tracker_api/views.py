@@ -33,3 +33,13 @@ class PartyViewSet(viewsets.ModelViewSet):
     queryset = Party.objects.all()
     serializer_class = PartySerializer
     permission_classes = [permissions.IsAuthenticated]
+
+
+class UserPartysViewSet(viewsets.ModelViewSet):
+    serializer_class = PartySerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+
+        user = self.request.user
+        return Party.objects.filter(master=user)
