@@ -6,7 +6,7 @@ const endpoint = websiteUrl.includes("witty-cliff")
 //Get users partys
 export async function getPartys(token: any) {
   try {
-    let partysArray = new Array();
+    let partysArray = [];
     let token = localStorage.getItem("token");
     const partysRes = await fetch(`${endpoint}/user-partys`, {
       method: "GET",

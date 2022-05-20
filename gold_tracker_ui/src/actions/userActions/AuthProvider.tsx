@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { createUser, login, getUser } from "./CRUDUser";
+import { createUser, login } from "./CRUDUser";
 import { getPartys } from "../partyActions/CRUDParty";
 
 interface AuthContextType {

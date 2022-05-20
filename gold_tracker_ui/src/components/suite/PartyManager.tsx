@@ -57,7 +57,6 @@ const PartyManager = () => {
     );
   };
 
-  let auth = useAuth();
   const getContent = () => {
     let partys = localStorage.getItem("partys");
     let data = "";
