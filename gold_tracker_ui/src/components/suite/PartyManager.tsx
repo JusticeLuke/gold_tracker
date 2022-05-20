@@ -8,7 +8,6 @@ import CommonButton from "../common/commonButton/CommonButton";
 import GridWrapper from "../common/gridWrapper/GridWrapper";
 import NewPartyModal from "../modal/NewPartyModal";
 import DataTable from "../common/dataTable/DataTable";
-import { useAuth } from "../../actions/userActions/AuthProvider";
 
 const PartyManager = () => {
   const [open, setOpen] = useState(false);
