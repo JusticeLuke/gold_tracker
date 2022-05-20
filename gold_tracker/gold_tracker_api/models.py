@@ -13,3 +13,27 @@ class Party(models.Model):
         on_delete=models.CASCADE,
         null=False,
     )
+
+
+class Character(models.Model):
+    name = models.CharField(max_length=69)
+    personal_gold = models.BigIntegerField(default=0)
+    personal_silver = models.BigIntegerField(default=0)
+    personal_copper = models.BigIntegerField(default=0)
+    party_id = models.ForeignKey(
+        Party,
+        related_name="party_characters",
+        on_delete=models.CASCADE,
+        null=False,
+    )
+
+
+class Log(models.Model):
+    entry = models.TextField()
+    time_created = models.TimeField()
+    party_id = models.ForeignKey(
+        Party,
+        related_name="party_log",
+        on_delete=models.CASCADE,
+        null=False,
+    )

@@ -35,6 +35,11 @@ urlpatterns = [
         name="party-list",
     ),
     path(
+        "id",
+        views.UserIdViewSet.as_view({"get": "list"}),
+        name="id",
+    ),
+    path(
         "partys/<int:pk>",
         views.PartyViewSet.as_view(
             {
@@ -50,6 +55,23 @@ urlpatterns = [
         "user-partys",
         views.UserPartysViewSet.as_view({"get": "list", "post": "create"}),
         name="user-party-list",
+    ),
+    path(
+        "partys/<int:pk>/characters",
+        views.CharacterViewSet.as_view(
+            {
+                "get": "retrieve",
+                "put": "update",
+                "patch": "partial_update",
+                "delete": "destroy",
+            }
+        ),
+        name="character-list",
+    ),
+    path(
+        "log/<int:party_id>",
+        views.LogViewSet.as_view({"get": "list", "post": "create"}),
+        name="log",
     ),
 ]
 
