@@ -6,6 +6,7 @@ import Login from "./components/accounts/Login";
 import Register from "./components/accounts/Register";
 import MonsterGen from "./components/suite/MonsterGen";
 import PartyManager from "./components/suite/PartyManager";
+import PartyInventory from "./components/suite/PartyInventory";
 import NoMatch from "./components/common/NoMatch";
 import { ThemeProvider } from "@mui/material/styles";
 import { AppTheme } from "./AppTheme";
@@ -28,6 +29,7 @@ ReactDOM.render(
                 </RequireAuth>
               }
             ></Route>
+            <Route path="partys/inventory" element={<PartyInventory />}></Route>
             <Route path="monsterGen" element={<MonsterGen />}></Route>
             <Route path="register" element={<Register />}></Route>
             <Route path="*" element={<NoMatch />} />

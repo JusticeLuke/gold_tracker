@@ -13,6 +13,7 @@ function App() {
     if (!localStorage.getItem("token")) {
       navigate("login");
     } else {
+      auth.signin("", true);
       navigate("partys");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

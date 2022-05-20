@@ -49,7 +49,7 @@ export default function Login() {
 
   function signInClick(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    auth.signin(values);
+    auth.signin(values, false);
   }
 
   return (

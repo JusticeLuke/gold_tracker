@@ -25,7 +25,6 @@ export async function createUser(data: any) {
 //Get user using login credintials
 export async function login(data: any) {
   try {
-    console.log(endpoint);
     const res = await fetch(`${endpoint}/api/v1/token/login`, {
       method: "POST",
       headers: {
@@ -49,7 +48,6 @@ export async function login(data: any) {
 //Get user using token
 export async function getUser(token: any) {
   try {
-    let token = localStorage.getItem("token");
     const userRes = await fetch(`${endpoint}/api/v1/users/me`, {
       method: "GET",
       headers: {
@@ -59,6 +57,16 @@ export async function getUser(token: any) {
     });
     const userJson = await userRes.json();
     localStorage.setItem("username", userJson.username);
+
+    const idRes = await fetch(`${endpoint}/id`, {
+      method: "GET",
+      headers: {
+        Authorization: `Token ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    const idJson = await idRes.json();
+    localStorage.setItem("id", idJson.results[0].id);
     return userJson;
   } catch (error) {
     console.log(error);

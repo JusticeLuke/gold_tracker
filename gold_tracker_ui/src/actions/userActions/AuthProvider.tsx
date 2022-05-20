@@ -2,37 +2,40 @@ import * as React from "react";
 import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { createUser, login, getUser } from "./CRUDUser";
+import { getPartys } from "../partyActions/CRUDParty";
 
 interface AuthContextType {
   username: string;
   token: string;
   signin: any;
   register: any;
+  userPartys: any;
   signout: (callback: VoidFunction) => void;
 }
 
-const websiteUrl = window.location.href;
-const endpoint = websiteUrl.includes("witty-cliff")
-  ? "https://goldtracker.azurewebsites.net"
-  : "http://localhost:8000";
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   let [username, setUser] = React.useState<any>(null);
   let [token, setAuthToken] = React.useState<any>(null);
+  let [userPartys, setUserPartys] = React.useState<any>(null);
   let navigate = useNavigate();
 
-  let signin = async (data: any) => {
-    const userJson = await login(data);
-    setUser(userJson.username);
-    let token = localStorage.getItem("token");
-    setAuthToken(token);
-    getUser(token);
+  let signin = async (data: any, rememberMe: boolean) => {
+    if (!rememberMe) {
+      await login(data);
+    }
+    setAuthToken(localStorage.getItem("token"));
+    const userPartyJson = await getPartys(localStorage.getItem("token"));
+    setUserPartys(userPartyJson.results);
     navigate("../partys");
   };
 
   let signout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
-    setUser("");
+    localStorage.removeItem("partys");
+    localStorage.removeItem("id");
+    setUser(null);
+    setUserPartys(null);
     setAuthToken(null);
   };
 
@@ -43,7 +46,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  let value = { username, signin, token, signout, register };
+  let value = { username, userPartys, signin, token, signout, register };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
@@ -56,7 +59,6 @@ export function useAuth() {
 
 export function RequireAuth({ children }: { children: JSX.Element }) {
   let auth = useAuth();
-  console.log(auth.token);
   if (!auth.token && !localStorage.getItem("token")) {
     // Redirect them to the /login page, but save the current location they were
     // trying to go to when they were redirected. This allows us to send them
