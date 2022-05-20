@@ -2,17 +2,19 @@ import React, { useState, useEffect } from "react";
 import BasicModal from "../common/basicModal/BasicModal";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import { createParty } from "../../actions/partyActions/CRUDParty";
 
 const defaultInputValues = {
   name: "",
-  anonGold: 0,
-  anonSilver: 0,
-  anonCopper: 0,
+  anon_gold: 0,
+  anon_silver: 0,
+  anon_copper: 0,
+  master: localStorage.getItem("id"),
 };
 
 const defaultErrorValues = {
-  nameError: false,
-  nameHelperText: "",
+  nameError: true,
+  nameHelperText: "Input your party's name.",
   goldError: false,
   goldHelperText: "",
   silverError: false,
@@ -21,7 +23,7 @@ const defaultErrorValues = {
   copperHelperText: "",
 };
 
-const NewPartyModal = ({ open, onClose, addNewParty }: any) => {
+const NewPartyModal = ({ open, onClose, handleSuccess }: any) => {
   const [values, setValues] = useState(defaultInputValues);
 
   const [errorValues, setErrorValues] = useState(defaultErrorValues);
@@ -113,7 +115,6 @@ const NewPartyModal = ({ open, onClose, addNewParty }: any) => {
   };
   //When input field has any change it validates the contents and sets the state to match the current input
   const handleChange = (value: any) => {
-    validateInput(value);
     setValues(value);
   };
 
@@ -125,10 +126,11 @@ const NewPartyModal = ({ open, onClose, addNewParty }: any) => {
       errorValues.silverError === true ||
       errorValues.copperError === true
     ) {
-      console.log("AN ERROR STILL REMAIN");
+      console.log("AN ERROR STILL REMAINS");
     } else {
       //Passes values(party name, gold, etc..) as props
-      addNewParty(values);
+      createParty(values);
+      return onClose();
     }
   };
 
@@ -145,19 +147,20 @@ const NewPartyModal = ({ open, onClose, addNewParty }: any) => {
           label="Party Name"
           required
           value={values.name}
-          onChange={(event) =>
-            handleChange({ ...values, name: event.target.value })
-          }
+          onChange={(event) => {
+            handleChange({ ...values, name: event.target.value });
+            validateInput(event.target.value);
+          }}
           error={errorValues.nameError ? true : false}
           helperText={errorValues.nameHelperText}
         />
         <TextField
           placeholder="0"
-          name="anonGold"
+          name="anon_gold"
           label="Gold"
-          value={values.anonGold}
+          value={values.anon_gold}
           onChange={(event) => {
-            handleChange({ ...values, anonGold: event.target.value });
+            handleChange({ ...values, anon_gold: event.target.value });
             validateGold(event.target.value);
           }}
           error={errorValues.goldError ? true : false}
@@ -165,11 +168,11 @@ const NewPartyModal = ({ open, onClose, addNewParty }: any) => {
         />
         <TextField
           placeholder="0"
-          name="anonSilver"
+          name="anon_silver"
           label="Silver"
-          value={values.anonSilver}
+          value={values.anon_silver}
           onChange={(event) => {
-            handleChange({ ...values, anonSilver: event.target.value });
+            handleChange({ ...values, anon_silver: event.target.value });
             validateSilver(event.target.value);
           }}
           error={errorValues.silverError ? true : false}
@@ -177,11 +180,11 @@ const NewPartyModal = ({ open, onClose, addNewParty }: any) => {
         />
         <TextField
           placeholder="0"
-          name="anonCopper"
+          name="anon_copper"
           label="Copper"
-          value={values.anonCopper}
+          value={values.anon_copper}
           onChange={(event) => {
-            handleChange({ ...values, anonCopper: event.target.value });
+            handleChange({ ...values, anon_copper: event.target.value });
             validateCopper(event.target.value);
           }}
           error={errorValues.copperError ? true : false}

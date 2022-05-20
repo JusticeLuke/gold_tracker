@@ -2,15 +2,13 @@ import React, { useState } from "react";
 import BasicCard from "../common/basicCard/BasicCard";
 import SearchBar from "../common/searchBar/SearchBar";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import IconButton from "@mui/material/IconButton";
 import CommonButton from "../common/commonButton/CommonButton";
 import GridWrapper from "../common/gridWrapper/GridWrapper";
 import NewPartyModal from "../modal/NewPartyModal";
-import { useAuth } from "../../actions/userActions/AuthProvider";
-import { getPartys } from "../../actions/partyActions/CRUDParty";
 import DataTable from "../common/dataTable/DataTable";
+import { useAuth } from "../../actions/userActions/AuthProvider";
 
 const PartyManager = () => {
   const [open, setOpen] = useState(false);
@@ -58,44 +56,28 @@ const PartyManager = () => {
       </Box>
     );
   };
-  const addNewParty = (data: any) => {
-    console.log(data);
-  };
 
-  let data = "";
-  const dataGrid = async () => {
-    if (localStorage.getItem("token")) {
-      console.log("getting partys");
-      data = await getPartys(localStorage.getItem("token"));
-      console.log(data);
-    } else {
-      data = "No partys for " + localStorage.getItem("username");
+  let auth = useAuth();
+  const getContent = () => {
+    let partys = localStorage.getItem("partys");
+    let data = "";
+    if (partys != null) {
+      data = JSON.parse(partys);
     }
+
+    return <DataTable rows={data} />;
   };
-  const getContent = () => (
-    <Typography
-      align="center"
-      sx={{
-        margin: "40px 16px",
-        color: "rgba(0, 0, 0, 0.6)",
-        fontSize: "1.3rem",
-      }}
-    >
-      <DataTable />
-    </Typography>
-  );
   return (
     <GridWrapper item xs={8} sx={{ margin: "auto" }}>
-      <BasicCard
-        header={getSearchHeader()}
-        content={(dataGrid(), getContent())}
-      />
+      <BasicCard header={getSearchHeader()} content={getContent()} />
       <NewPartyModal
         open={open}
         onClose={() => {
           setOpen(false);
         }}
-        addNewParty={addNewParty}
+        onSuccessfulSubmit={() => {
+          setOpen(false);
+        }}
       />
     </GridWrapper>
   );
