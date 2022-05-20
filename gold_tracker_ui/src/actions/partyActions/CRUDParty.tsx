@@ -17,11 +17,12 @@ export async function getPartys(token: any) {
     });
 
     let partysJson = await partysRes.json();
+    let pageNum = 2;
     for (let x = 0; x < partysJson.results.length; x++) {
       partysArray.push(partysJson.results[x]);
     }
     do {
-      let nextPageRes = await fetch(partysJson.next, {
+      let nextPageRes = await fetch(`${endpoint}/user-partys?page=${pageNum}`, {
         method: "GET",
         headers: {
           Authorization: `Token ${token}`,
@@ -29,6 +30,7 @@ export async function getPartys(token: any) {
         },
       });
       partysJson = await nextPageRes.json();
+      pageNum++;
       for (let x = 0; x < partysJson.results.length; x++) {
         partysArray.push(partysJson.results[x]);
       }
