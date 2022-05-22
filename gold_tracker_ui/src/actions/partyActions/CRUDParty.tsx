@@ -21,7 +21,7 @@ export async function getPartys(token: any) {
     for (let x = 0; x < partysJson.results.length; x++) {
       partysArray.push(partysJson.results[x]);
     }
-    do {
+    while (partysJson.next) {
       let nextPageRes = await fetch(`${endpoint}/user-partys?page=${pageNum}`, {
         method: "GET",
         headers: {
@@ -34,7 +34,7 @@ export async function getPartys(token: any) {
       for (let x = 0; x < partysJson.results.length; x++) {
         partysArray.push(partysJson.results[x]);
       }
-    } while (partysJson.next);
+    }
 
     localStorage.setItem("partys", JSON.stringify(partysArray));
     return partysJson;
@@ -55,6 +55,47 @@ export async function createParty(data: any) {
         Authorization: `Token ${token}`,
       },
       body: JSON.stringify(data),
+    });
+    if (res.statusText !== "Created") {
+      throw new Error("Something went wrong.");
+    }
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+
+export async function deleteParty() {
+  try {
+    let token = localStorage.getItem("token");
+    let partyId = localStorage.getItem("partyId");
+    const res = await fetch(`${endpoint}/partys/${partyId}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json; indent=4",
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+    });
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+
+export async function updateParty() {
+  try {
+    let token = localStorage.getItem("token");
+    let partyId = localStorage.getItem("partyId");
+    const res = await fetch(`${endpoint}/partys/${partyId}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json; indent=4",
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
     });
     if (res.statusText !== "Created") {
       throw new Error("Something went wrong.");
