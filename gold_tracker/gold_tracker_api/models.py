@@ -20,6 +20,9 @@ class Character(models.Model):
     personal_gold = models.BigIntegerField(default=0)
     personal_silver = models.BigIntegerField(default=0)
     personal_copper = models.BigIntegerField(default=0)
+    tribute_gold = models.BigIntegerField(default=0)
+    tribute_silver = models.BigIntegerField(default=0)
+    tribute_copper = models.BigIntegerField(default=0)
     party_id = models.ForeignKey(
         Party,
         related_name="party_characters",
@@ -29,6 +32,10 @@ class Character(models.Model):
 
 
 class Log(models.Model):
+    name = models.CharField(max_length=69, null=True)
+    gold = models.BigIntegerField(default=0)
+    silver = models.BigIntegerField(default=0)
+    copper = models.BigIntegerField(default=0)
     entry = models.TextField()
     time_created = models.TimeField()
     party_id = models.ForeignKey(

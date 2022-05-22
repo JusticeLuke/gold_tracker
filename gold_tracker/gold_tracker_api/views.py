@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework import permissions
-from rest_framework.response import Response
+from rest_framework import generics
 from gold_tracker.gold_tracker_api.models import Party, Character, Log
 from gold_tracker.gold_tracker_api.serializers import (
     UserSerializer,
@@ -56,19 +56,31 @@ class UserPartysViewSet(viewsets.ModelViewSet):
         return Party.objects.filter(master=user)
 
 
-class CharacterViewSet(viewsets.ModelViewSet):
+# Create or Read characters matching party_id
+class CharacterViewSet(generics.ListCreateAPIView):
     serializer_class = CharacterSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    def get_queryset(self, pk):
-        party = Party.objects.get(pk=pk)
-        return Character.objects.filter(party_id=party)
+    def get_queryset(self):
+        uid = self.kwargs["fk"]
+        return Character.objects.filter(party_id=uid)
 
 
-class LogViewSet(viewsets.ModelViewSet):
+# Read Update or Delete character
+class ManageCharacterViewSet(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = CharacterSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        uid = self.kwargs["pk"]
+        return Character.objects.filter(id=uid)
+
+
+# Create or Read log matching party_id
+class LogViewSet(generics.ListCreateAPIView):
     serializer_class = LogSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        party = self.request.party
-        return Log.objects.filter(party_id=party)
+        uid = self.kwargs["fk"]
+        return Log.objects.filter(party_id=uid)
