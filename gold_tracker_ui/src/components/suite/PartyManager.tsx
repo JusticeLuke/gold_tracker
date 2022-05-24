@@ -7,7 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import CommonButton from "../common/commonButton/CommonButton";
 import GridWrapper from "../common/gridWrapper/GridWrapper";
 import NewPartyModal from "../modal/NewPartyModal";
-import DataTable from "../common/dataTable/DataTable";
+import PartyDataTable from "../common/dataTable/PartyDataTable";
 
 const PartyManager = () => {
   const [open, setOpen] = useState(false);
@@ -63,7 +63,7 @@ const PartyManager = () => {
       data = JSON.parse(partys);
     }
 
-    return <DataTable rows={data} />;
+    return <PartyDataTable rows={data} />;
   };
   return (
     <GridWrapper item xs={8} sx={{ margin: "auto" }}>
