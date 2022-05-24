@@ -116,7 +116,7 @@ export default function Register() {
         onClick={() => {
           navigate("../login");
         }}
-        href="#"
+        href=""
         sx={{ m: 1 }}
       >
         Already have an account?

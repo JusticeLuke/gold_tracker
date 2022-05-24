@@ -105,7 +105,7 @@ export default function Login() {
         onClick={() => {
           navigate("../register");
         }}
-        href="#"
+        href=""
         sx={{ m: 1 }}
       >
         Create new account
