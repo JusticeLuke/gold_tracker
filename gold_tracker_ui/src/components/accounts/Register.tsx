@@ -11,6 +11,7 @@ import CommonButton from "../common/commonButton/CommonButton";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import { useAuth } from "../../actions/userActions/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 interface State {
   username: string;
@@ -21,6 +22,7 @@ interface State {
 
 export default function Register() {
   let auth = useAuth();
+  let navigate = useNavigate();
   const [values, setValues] = React.useState<State>({
     username: "",
     password: "",
@@ -110,7 +112,13 @@ export default function Register() {
       >
         Register
       </CommonButton>
-      <Link href="login" sx={{ m: 1 }}>
+      <Link
+        onClick={() => {
+          navigate("../login");
+        }}
+        href="#"
+        sx={{ m: 1 }}
+      >
         Already have an account?
       </Link>
     </Grid>

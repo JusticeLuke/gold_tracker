@@ -11,6 +11,7 @@ import CommonButton from "../common/commonButton/CommonButton";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import { useAuth } from "../../actions/userActions/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 interface State {
   username: string;
@@ -21,12 +22,12 @@ interface State {
 
 export default function Login() {
   let auth = useAuth();
-
+  let navigate = useNavigate();
   const [values, setValues] = React.useState<State>({
     username: "",
     password: "",
     showPassword: false,
-    from: { pathname: "../partys" }, //who knows if this is right
+    from: { pathname: "../partys" },
   });
 
   const handleChange =
@@ -100,7 +101,13 @@ export default function Login() {
       >
         Sign In
       </CommonButton>
-      <Link href="register" sx={{ m: 1 }}>
+      <Link
+        onClick={() => {
+          navigate("../register");
+        }}
+        href="#"
+        sx={{ m: 1 }}
+      >
         Create new account
       </Link>
     </Grid>
