@@ -7,18 +7,15 @@ export async function createCharacter(data: any) {
   try {
     let token = localStorage.getItem("token");
     let partyId = localStorage.getItem("partyId");
-    const res = await fetch(
-      `${endpoint}/partyCharacters/${partyId}/characters`,
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json; indent=4",
-          "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
-        },
-        body: JSON.stringify(data),
-      }
-    );
+    const res = await fetch(`${endpoint}/partys/${partyId}/characters`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json; indent=4",
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
     if (res.statusText !== "Created") {
       throw new Error("Something went wrong.");
     }
@@ -66,7 +63,7 @@ export async function getPartyCharacters() {
       }
     }
 
-    localStorage.setItem("partys", JSON.stringify(partyCharactersArray));
+    localStorage.setItem("characters", JSON.stringify(partyCharactersArray));
     return partyCharactersJson;
   } catch (error) {
     console.log(error);
@@ -100,7 +97,7 @@ export async function updateCharacter(data: any) {
     let token = localStorage.getItem("token");
     let partyId = localStorage.getItem("partyId");
     const res = await fetch(
-      `${endpoint}/partyCharacters/${partyId}/characters/${data.id}`,
+      `${endpoint}/partys/${partyId}/characters/${data.id}`,
       {
         method: "PUT",
         headers: {
@@ -122,16 +119,13 @@ export async function deleteCharacter(id: number) {
   try {
     let token = localStorage.getItem("token");
     let partyId = localStorage.getItem("partyId");
-    const res = await fetch(
-      `${endpoint}/partyCharacters/${partyId}/characters/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
-        },
-      }
-    );
+    const res = await fetch(`${endpoint}/partys/${partyId}/characters/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+    });
     if (res.statusText !== "Created") {
       throw new Error("Something went wrong.");
     }

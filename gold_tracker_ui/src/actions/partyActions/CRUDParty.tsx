@@ -47,6 +47,7 @@ export async function getPartys(token: any) {
 export async function createParty(data: any) {
   try {
     let token = localStorage.getItem("token");
+    console.log(token);
     const res = await fetch(`${endpoint}/partys`, {
       method: "POST",
       headers: {
@@ -70,7 +71,7 @@ export async function deleteParty() {
   try {
     let token = localStorage.getItem("token");
     let partyId = localStorage.getItem("partyId");
-    const res = await fetch(`${endpoint}/partys/${partyId}`, {
+    await fetch(`${endpoint}/partys/${partyId}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json; indent=4",
@@ -89,7 +90,7 @@ export async function updateParty() {
   try {
     let token = localStorage.getItem("token");
     let partyId = localStorage.getItem("partyId");
-    const res = await fetch(`${endpoint}/partys/${partyId}`, {
+    await fetch(`${endpoint}/partys/${partyId}`, {
       method: "PUT",
       headers: {
         Accept: "application/json; indent=4",
@@ -97,9 +98,6 @@ export async function updateParty() {
         Authorization: `Token ${token}`,
       },
     });
-    if (res.statusText !== "Created") {
-      throw new Error("Something went wrong.");
-    }
     return true;
   } catch (error) {
     console.log(error);

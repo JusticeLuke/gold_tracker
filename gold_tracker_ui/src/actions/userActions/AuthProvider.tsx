@@ -30,13 +30,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   let signout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-    localStorage.removeItem("partys");
-    localStorage.removeItem("id");
+    localStorage.clear();
     setUser(null);
     setUserPartys(null);
     setAuthToken(null);
+    navigate("../login");
   };
 
   let register = async (data: any) => {
