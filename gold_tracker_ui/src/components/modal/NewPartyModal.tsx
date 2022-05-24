@@ -129,6 +129,7 @@ const NewPartyModal = ({ open, onClose, handleSuccess }: any) => {
       console.log("AN ERROR STILL REMAINS");
     } else {
       //Passes values(party name, gold, etc..) as props
+      setValues({ ...values, master: localStorage.getItem("id") });
       createParty(values);
       return onClose();
     }
@@ -138,6 +139,7 @@ const NewPartyModal = ({ open, onClose, handleSuccess }: any) => {
   useEffect(() => {
     if (open) setValues(defaultInputValues);
   }, [open]);
+
   const getContent = () => {
     return (
       <Box sx={partyModalStyles.inputFields}>
