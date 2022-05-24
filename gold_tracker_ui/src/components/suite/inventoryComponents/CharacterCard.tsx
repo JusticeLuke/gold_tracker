@@ -5,12 +5,18 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddchartIcon from "@mui/icons-material/Addchart";
 import Tooltip from "@mui/material/Tooltip";
-
+import CommonButton from "../../common/commonButton/CommonButton";
+import { deleteCharacter } from "../../../actions/characterActions/CRUDCharacter";
 export default function CharacterDataTable(row: any) {
   let character = row.row;
+
+  const handleWealth = () => {};
+  const handleTribute = () => {};
+
   if (character !== undefined) {
     return (
       <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
@@ -22,61 +28,34 @@ export default function CharacterDataTable(row: any) {
                 primary={"Wealth of " + character.name}
               />
             </ListItem>
-            <ListItem
-              secondaryAction={
-                <Tooltip
-                  title="Add gold to personal wealth"
-                  placement="right-end"
-                >
-                  <IconButton edge="end" aria-label="add">
-                    <AddCircleOutlineIcon />
-                  </IconButton>
-                </Tooltip>
-              }
-            >
-              <ListItemAvatar>
-                <Avatar sx={{ bgcolor: "#ffc400" }}>G</Avatar>
-              </ListItemAvatar>
+            <ListItem>
+              <Tooltip title={"gold"} placement={"right-start"}>
+                <ListItemAvatar>
+                  <Avatar sx={{ bgcolor: "#ffc400" }}>G</Avatar>
+                </ListItemAvatar>
+              </Tooltip>
               <ListItemText
                 sx={{ textAlign: "center" }}
                 primary={character.personal_gold}
               />
             </ListItem>
-            <ListItem
-              secondaryAction={
-                <Tooltip
-                  title="Add silver to personal wealth"
-                  placement="right-end"
-                >
-                  <IconButton edge="end" aria-label="add">
-                    <AddCircleOutlineIcon />
-                  </IconButton>
-                </Tooltip>
-              }
-            >
-              <ListItemAvatar>
-                <Avatar sx={{ bgcolor: "#648dae" }}>S</Avatar>
-              </ListItemAvatar>
+            <ListItem>
+              <Tooltip title={"silver"} placement={"right-start"}>
+                <ListItemAvatar>
+                  <Avatar sx={{ bgcolor: "#648dae" }}>S</Avatar>
+                </ListItemAvatar>
+              </Tooltip>
               <ListItemText
                 sx={{ textAlign: "center" }}
                 primary={character.personal_silver}
               />
             </ListItem>
-            <ListItem
-              secondaryAction={
-                <Tooltip
-                  title="Add copper to personal wealth"
-                  placement="right-end"
-                >
-                  <IconButton edge="end" aria-label="add">
-                    <AddCircleOutlineIcon />
-                  </IconButton>
-                </Tooltip>
-              }
-            >
-              <ListItemAvatar>
-                <Avatar sx={{ bgcolor: "#852508" }}>C</Avatar>
-              </ListItemAvatar>
+            <ListItem>
+              <Tooltip title={"copper"} placement={"right-start"}>
+                <ListItemAvatar>
+                  <Avatar sx={{ bgcolor: "#852508" }}>C</Avatar>
+                </ListItemAvatar>
+              </Tooltip>
               <ListItemText
                 sx={{ textAlign: "center" }}
                 primary={character.personal_copper}
@@ -84,9 +63,43 @@ export default function CharacterDataTable(row: any) {
             </ListItem>
           </List>
         </nav>
+        <Box sx={{ textAlign: "center" }}>
+          <CommonButton
+            variant={"contained"}
+            color={"primary"}
+            title={"Manage personal wealth"}
+            placement={"bottom-start"}
+            onClick={() => {
+              handleWealth();
+            }}
+          >
+            <AddchartIcon />
+          </CommonButton>
+          <CommonButton
+            sx={{ mx: "10px", my: "5px" }}
+            variant={"contained"}
+            color={"primary"}
+            title={"Contribute to party's shared gold"}
+            placement={"bottom-start"}
+            onClick={() => {}}
+          >
+            <GroupAddIcon />
+          </CommonButton>
+          <CommonButton
+            variant={"contained"}
+            color={"primary"}
+            title={"Delete character"}
+            placement={"bottom-start"}
+            onClick={() => {
+              deleteCharacter(character.id);
+            }}
+          >
+            <DeleteIcon />
+          </CommonButton>
+        </Box>
       </Box>
     );
   } else {
-    return <div>Please select a character</div>;
+    return <Box sx={{ width: "360px" }}>Please select a character</Box>;
   }
 }
