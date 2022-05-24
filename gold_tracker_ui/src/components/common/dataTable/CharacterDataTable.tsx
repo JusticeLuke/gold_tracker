@@ -9,7 +9,7 @@ import Paper from "@mui/material/Paper";
 import EditIcon from "@mui/icons-material/Edit";
 import CommonButton from "../commonButton/CommonButton";
 import CharacterCard from "../../suite/inventoryComponents/CharacterCard";
-import AddIcon from "@mui/icons-material/AddCircleOutline";
+import LogCard from "../../suite/inventoryComponents/LogCard";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
@@ -18,7 +18,7 @@ export default function CharacterDataTable(rows: any) {
   const handleSubmit = (row: any) => {
     setCharacter(row);
   };
-  console.log(rows.rows);
+
   if (rows.rows.length > 0) {
     return (
       <TableContainer sx={{ display: "inline-flex" }} component={Paper}>
@@ -26,16 +26,6 @@ export default function CharacterDataTable(rows: any) {
           <TableHead>
             <TableRow>
               <TableCell>Characters</TableCell>
-              <TableCell>
-                <CommonButton
-                  variant={"contained"}
-                  color={"primary"}
-                  title={"Add new character"}
-                  placement={"right-end"}
-                >
-                  <AddIcon />
-                </CommonButton>
-              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -54,6 +44,7 @@ export default function CharacterDataTable(rows: any) {
                     onClick={() => {
                       handleSubmit(row);
                     }}
+                    title={"Manage Character"}
                   >
                     <EditIcon />
                   </CommonButton>
@@ -63,20 +54,13 @@ export default function CharacterDataTable(rows: any) {
           </TableBody>
         </Table>
         <CharacterCard row={character} />
+        <LogCard />
       </TableContainer>
     );
   } else {
     return (
       <Box sx={{ display: "block", textAlign: "center" }}>
         <Typography>This party has no characters</Typography>{" "}
-        <CommonButton
-          variant={"contained"}
-          color={"primary"}
-          title={"Add new character"}
-          placement={"right-end"}
-        >
-          <AddIcon />
-        </CommonButton>
       </Box>
     );
   }

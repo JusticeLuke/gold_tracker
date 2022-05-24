@@ -73,9 +73,6 @@ const PartyManager = () => {
         onClose={() => {
           setOpen(false);
         }}
-        onSuccessfulSubmit={() => {
-          setOpen(false);
-        }}
       />
     </GridWrapper>
   );
