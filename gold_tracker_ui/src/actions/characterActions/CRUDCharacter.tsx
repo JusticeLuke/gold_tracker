@@ -96,18 +96,15 @@ export async function updateCharacter(data: any) {
   try {
     let token = localStorage.getItem("token");
     let partyId = localStorage.getItem("partyId");
-    const res = await fetch(
-      `${endpoint}/partys/${partyId}/characters/${data.id}`,
-      {
-        method: "PUT",
-        headers: {
-          Accept: "application/json; indent=4",
-          "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
-        },
-        body: JSON.stringify(data),
-      }
-    );
+    await fetch(`${endpoint}/partys/${partyId}/characters/${data.id}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json; indent=4",
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
     return true;
   } catch (error) {
     console.log(error);
@@ -119,16 +116,13 @@ export async function deleteCharacter(id: number) {
   try {
     let token = localStorage.getItem("token");
     let partyId = localStorage.getItem("partyId");
-    const res = await fetch(`${endpoint}/partys/${partyId}/characters/${id}`, {
+    await fetch(`${endpoint}/partys/${partyId}/characters/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Token ${token}`,
       },
     });
-    if (res.statusText !== "Created") {
-      throw new Error("Something went wrong.");
-    }
     return true;
   } catch (error) {
     console.log(error);
