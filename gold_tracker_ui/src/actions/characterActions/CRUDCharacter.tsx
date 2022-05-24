@@ -3,6 +3,7 @@ const endpoint = websiteUrl.includes("witty-cliff")
   ? "https://goldtracker.azurewebsites.net"
   : "http://localhost:8000";
 
+//Creates a new character
 export async function createCharacter(data: any) {
   try {
     let token = localStorage.getItem("token");
@@ -26,6 +27,7 @@ export async function createCharacter(data: any) {
   }
 }
 
+//Gets all characters belonging to party
 export async function getPartyCharacters() {
   try {
     let partyCharactersArray = [];
@@ -70,6 +72,7 @@ export async function getPartyCharacters() {
   }
 }
 
+//Gets character matching id
 export async function getCharacter(id: number) {
   try {
     let token = localStorage.getItem("token");
@@ -92,6 +95,7 @@ export async function getCharacter(id: number) {
   }
 }
 
+//Needs testing
 export async function updateCharacter(data: any) {
   try {
     let token = localStorage.getItem("token");
@@ -112,6 +116,7 @@ export async function updateCharacter(data: any) {
   }
 }
 
+//Deletes character matching id
 export async function deleteCharacter(id: number) {
   try {
     let token = localStorage.getItem("token");
