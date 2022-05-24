@@ -47,7 +47,6 @@ export async function getPartys(token: any) {
 export async function createParty(data: any) {
   try {
     let token = localStorage.getItem("token");
-    console.log(token);
     const res = await fetch(`${endpoint}/partys`, {
       method: "POST",
       headers: {
