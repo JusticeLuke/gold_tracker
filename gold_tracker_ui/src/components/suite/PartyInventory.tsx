@@ -29,14 +29,14 @@ const PartyInventory = () => {
     <GridWrapper item xs={8} sx={{ margin: "auto" }}>
       <Box sx={{ mt: "5px" }}>
         <Link
-          href="#"
+          href=""
           onClick={() => {
             navigate("../partys");
           }}
         >
           Party
         </Link>
-        /Characters
+        <pre> / Characters</pre>
       </Box>
       <BasicCard content={getContent()} />
       <CommonButton
