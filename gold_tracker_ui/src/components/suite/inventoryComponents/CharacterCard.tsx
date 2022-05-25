@@ -10,12 +10,25 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddchartIcon from "@mui/icons-material/Addchart";
 import Tooltip from "@mui/material/Tooltip";
 import CommonButton from "../../common/commonButton/CommonButton";
-import { deleteCharacter } from "../../../actions/characterActions/CRUDCharacter";
+import NewWealthModal from "../../modal/NewWealthModal";
+import NewTributeModal from "../../modal/NewTributeModal";
+import ConfirmCharacterDelete from "../../modal/ConfirmCharacterDelete";
+
 export default function CharacterDataTable(row: any) {
   let character = row.row;
+  const [openWealth, setOpenWealth] = React.useState(false);
+  const [openTribute, setOpenTribute] = React.useState(false);
+  const [openDelete, setOpenDelete] = React.useState(false);
 
-  const handleWealth = () => {};
-  const handleTribute = () => {};
+  const handleWealth = () => {
+    setOpenWealth(true);
+  };
+  const handleTribute = () => {
+    setOpenTribute(true);
+  };
+  const handleDelete = () => {
+    setOpenDelete(true);
+  };
 
   if (character !== undefined) {
     return (
@@ -69,9 +82,7 @@ export default function CharacterDataTable(row: any) {
             color={"primary"}
             title={"Manage personal wealth"}
             placement={"bottom-start"}
-            onClick={() => {
-              handleWealth();
-            }}
+            onClick={handleWealth}
           >
             <AddchartIcon />
           </CommonButton>
@@ -81,7 +92,7 @@ export default function CharacterDataTable(row: any) {
             color={"primary"}
             title={"Contribute to party's shared gold"}
             placement={"bottom-start"}
-            onClick={() => {}}
+            onClick={handleTribute}
           >
             <GroupAddIcon />
           </CommonButton>
@@ -90,16 +101,39 @@ export default function CharacterDataTable(row: any) {
             color={"primary"}
             title={"Delete character"}
             placement={"bottom-start"}
-            onClick={() => {
-              deleteCharacter(character.id);
-            }}
+            onClick={handleDelete}
           >
             <DeleteIcon />
           </CommonButton>
         </Box>
+        <NewWealthModal
+          open={openWealth}
+          onClose={() => {
+            setOpenWealth(false);
+          }}
+          character={character}
+        />
+        <NewTributeModal
+          open={openTribute}
+          onClose={() => {
+            setOpenTribute(false);
+          }}
+          character={character}
+        />
+        {/* <ConfirmCharacterDelete
+          open={openDelete}
+          onClose={() => {
+            setOpenDelete(false);
+          }}
+          character={character}
+        /> */}
       </Box>
     );
   } else {
-    return <Box sx={{ width: "360px" }}>Please select a character</Box>;
+    return (
+      <Box sx={{ width: "360px", textAlign: "center" }}>
+        Please select a character
+      </Box>
+    );
   }
 }
