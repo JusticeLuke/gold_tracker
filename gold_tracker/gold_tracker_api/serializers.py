@@ -30,6 +30,9 @@ class CharacterSerializer(serializers.ModelSerializer):
             "personal_gold",
             "personal_silver",
             "personal_copper",
+            "tribute_gold",
+            "tribute_silver",
+            "tribute_copper",
             "party_id",
         ]
 
