@@ -138,32 +138,6 @@ const NewTributeModal = ({ open, onClose, character }: any) => {
   const handleChange = (value: any, temp: any) => {
     setValues(value);
     setTempValues(temp);
-    // let goldTribute =
-    //   Number(value.tribute_gold) + Number(character.tribute_gold);
-    // let silverTribute =
-    //   Number(value.tribute_silver) + Number(character.tribute_silver);
-    // let copperTribute =
-    //   Number(value.tribute_copper) + Number(character.tribute_copper);
-    // let newGold = Number(character.personal_gold) - Number(value.tribute_gold);
-    // let newSilver =
-    //   Number(character.personal_silver) - Number(value.tribute_silver);
-    // let newCopper =
-    //   Number(character.personal_copper) - Number(value.tribute_copper);
-    // setTempValues({
-    //   ...tempValues,
-    //   tempGold: value.tribute_gold,
-    //   tempSilver: value.tribute_silver,
-    //   tempCopper: value.tribute_copper,
-    // });
-    // setValues({
-    //   ...values,
-    //   tribute_gold: goldTribute,
-    //   tribute_silver: silverTribute,
-    //   tribute_copper: copperTribute,
-    //   personal_gold: newGold,
-    //   personal_silver: newSilver,
-    //   personal_copper: newCopper,
-    // });
   };
 
   //Checks if any errors are active
@@ -189,6 +163,7 @@ const NewTributeModal = ({ open, onClose, character }: any) => {
       setTempValues(defaultTempValues);
       setValues(defaultInputValues);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   const getContent = () => {

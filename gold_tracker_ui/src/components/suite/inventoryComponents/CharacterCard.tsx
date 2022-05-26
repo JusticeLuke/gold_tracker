@@ -12,22 +12,18 @@ import Tooltip from "@mui/material/Tooltip";
 import CommonButton from "../../common/commonButton/CommonButton";
 import NewWealthModal from "../../modal/NewWealthModal";
 import NewTributeModal from "../../modal/NewTributeModal";
-import ConfirmCharacterDelete from "../../modal/ConfirmCharacterDelete";
+import { deleteCharacter } from "../../../actions/characterActions/CRUDCharacter";
 
 export default function CharacterDataTable(row: any) {
   let character = row.row;
   const [openWealth, setOpenWealth] = React.useState(false);
   const [openTribute, setOpenTribute] = React.useState(false);
-  const [openDelete, setOpenDelete] = React.useState(false);
 
   const handleWealth = () => {
     setOpenWealth(true);
   };
   const handleTribute = () => {
     setOpenTribute(true);
-  };
-  const handleDelete = () => {
-    setOpenDelete(true);
   };
 
   if (character !== undefined) {
@@ -101,7 +97,7 @@ export default function CharacterDataTable(row: any) {
             color={"primary"}
             title={"Delete character"}
             placement={"bottom-start"}
-            onClick={handleDelete}
+            onClick={deleteCharacter(row.id)}
           >
             <DeleteIcon />
           </CommonButton>
@@ -120,13 +116,6 @@ export default function CharacterDataTable(row: any) {
           }}
           character={character}
         />
-        {/* <ConfirmCharacterDelete
-          open={openDelete}
-          onClose={() => {
-            setOpenDelete(false);
-          }}
-          character={character}
-        /> */}
       </Box>
     );
   } else {

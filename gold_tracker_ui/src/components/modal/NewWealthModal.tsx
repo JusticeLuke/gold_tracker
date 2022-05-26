@@ -112,6 +112,7 @@ const NewWealthModal = ({ open, onClose, character }: any) => {
   //Clears inputs on modal close
   useEffect(() => {
     if (open) setValues(defaultInputValues);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   const getContent = () => {
