@@ -97,7 +97,7 @@ export default function CharacterDataTable(row: any) {
             color={"primary"}
             title={"Delete character"}
             placement={"bottom-start"}
-            onClick={deleteCharacter(row.id)}
+            onClick={() => deleteCharacter(character.id)}
           >
             <DeleteIcon />
           </CommonButton>

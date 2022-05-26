@@ -9,6 +9,9 @@ import AddIcon from "@mui/icons-material/AddCircleOutline";
 import NewCharacterModal from "../modal/NewCharacterModal";
 import { deleteParty } from "../../actions/partyActions/CRUDParty";
 import { useNavigate } from "react-router-dom";
+import LogCard from "./inventoryComponents/LogCard";
+import GraphsCard from "./inventoryComponents/GraphsCard";
+import Grid from "@mui/material/Grid";
 
 const PartyInventory = () => {
   let navigate = useNavigate();
@@ -33,7 +36,7 @@ const PartyInventory = () => {
   };
 
   return (
-    <GridWrapper item xs={8} sx={{ margin: "auto" }}>
+    <GridWrapper item xs={12}>
       <Box sx={{ m: "10px", display: "inline-block" }}>
         <Link
           href=""
@@ -61,7 +64,16 @@ const PartyInventory = () => {
           setOpen(false);
         }}
       />
+
       <BasicCard content={getContent()} />
+      <Grid container>
+        <Grid item xs={4}>
+          <LogCard />
+        </Grid>
+        <Grid item xs={8}>
+          <GraphsCard />
+        </Grid>
+      </Grid>
       <CommonButton
         sx={{ mt: 10 }}
         variant={"contained"}

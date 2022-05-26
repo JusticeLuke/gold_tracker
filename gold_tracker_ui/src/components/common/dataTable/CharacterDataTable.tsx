@@ -54,7 +54,6 @@ export default function CharacterDataTable(rows: any) {
           </TableBody>
         </Table>
         <CharacterCard row={character} />
-        <LogCard />
       </TableContainer>
     );
   } else {
