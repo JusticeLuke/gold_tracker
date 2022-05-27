@@ -129,7 +129,6 @@ const NewCharacterModal = ({ open, onClose }: any) => {
       console.log("AN ERROR STILL REMAINS");
     } else {
       //Passes values(party name, gold, etc..) as props
-      setValues({ ...values, party_id: localStorage.getItem("partyId") });
       createCharacter(values);
       return onClose();
     }
@@ -150,7 +149,11 @@ const NewCharacterModal = ({ open, onClose }: any) => {
           required
           value={values.name}
           onChange={(event) => {
-            handleChange({ ...values, name: event.target.value });
+            handleChange({
+              ...values,
+              name: event.target.value,
+              party_id: localStorage.getItem("partyId"),
+            });
             validateInput(event.target.value);
           }}
           error={errorValues.nameError ? true : false}

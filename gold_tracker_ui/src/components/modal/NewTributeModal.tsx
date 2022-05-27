@@ -152,7 +152,6 @@ const NewTributeModal = ({ open, onClose, character }: any) => {
       //Passes values(party name, gold, etc..) as props
 
       updateCharacter(values);
-      console.log(values);
       return onClose();
     }
   };
