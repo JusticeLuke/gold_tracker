@@ -10,12 +10,14 @@ import EditIcon from "@mui/icons-material/Edit";
 import CommonButton from "../commonButton/CommonButton";
 import { useNavigate } from "react-router-dom";
 import { getPartyCharacters } from "../../../actions/characterActions/CRUDCharacter";
+import { getLog } from "../../../actions/logActions/CRLog";
 
 export default function PartyDataTable(rows: any) {
   const navigate = useNavigate();
   const editPartyClick = async (row: any) => {
     localStorage.setItem("partyId", row.id);
     await getPartyCharacters();
+    await getLog();
     navigate("inventory");
   };
 

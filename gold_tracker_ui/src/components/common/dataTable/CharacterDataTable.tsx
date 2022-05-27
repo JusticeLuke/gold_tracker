@@ -9,7 +9,6 @@ import Paper from "@mui/material/Paper";
 import EditIcon from "@mui/icons-material/Edit";
 import CommonButton from "../commonButton/CommonButton";
 import CharacterCard from "../../suite/inventoryComponents/CharacterCard";
-import LogCard from "../../suite/inventoryComponents/LogCard";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
