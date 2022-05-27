@@ -88,7 +88,8 @@ export async function getCharacter(id: number) {
     if (res.statusText !== "Created") {
       throw new Error("Something went wrong.");
     }
-    return true;
+    const characterJson = res.json();
+    return characterJson;
   } catch (error) {
     console.log(error);
     return false;
