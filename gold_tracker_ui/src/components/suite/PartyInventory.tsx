@@ -1,5 +1,4 @@
 import React from "react";
-import BasicCard from "../common/basicCard/BasicCard";
 import GridWrapper from "../common/gridWrapper/GridWrapper";
 import CharacterDataTable from "../common/dataTable/CharacterDataTable";
 import CommonButton from "../common/commonButton/CommonButton";
@@ -27,12 +26,12 @@ const PartyInventory = () => {
     setOpen(true);
   };
 
-  const getContent = () => {
-    let data = [];
+  const getData = () => {
+    let characterData = [];
     if (characters != null) {
-      data = JSON.parse(characters);
+      characterData = JSON.parse(characters);
     }
-    return <CharacterDataTable rows={data} />;
+    return characterData;
   };
 
   return (
@@ -65,11 +64,9 @@ const PartyInventory = () => {
         }}
       />
 
-      <BasicCard content={getContent()} />
+      <CharacterDataTable rows={getData()} />
       <Grid container>
-        <Grid item xs={4}>
-          <LogCard />
-        </Grid>
+        <LogCard />
         <Grid item xs={8}>
           <GraphsCard />
         </Grid>
