@@ -22,7 +22,6 @@ const LogCard = () => {
   };
   const getContent = () => {
     const logData = getLogData();
-    console.log(logData);
     return (
       <List>
         {logData.map((row: any) => (
