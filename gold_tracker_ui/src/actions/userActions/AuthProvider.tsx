@@ -24,7 +24,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       await login(data);
     }
     setAuthToken(localStorage.getItem("token"));
-    const userPartyJson = await getPartys(localStorage.getItem("token"));
+    const userPartyJson = await getPartys();
     setUserPartys(userPartyJson.results);
     navigate("../partys");
   };

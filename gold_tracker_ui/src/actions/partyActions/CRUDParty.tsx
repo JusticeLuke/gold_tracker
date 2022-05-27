@@ -4,7 +4,7 @@ const endpoint = websiteUrl.includes("witty-cliff")
   : "http://localhost:8000";
 
 //Get users partys
-export async function getPartys(token: any) {
+export async function getPartys() {
   try {
     let partysArray = [];
     let token = localStorage.getItem("token");

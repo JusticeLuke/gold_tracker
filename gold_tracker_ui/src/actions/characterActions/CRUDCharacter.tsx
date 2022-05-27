@@ -8,6 +8,9 @@ export async function createCharacter(data: any) {
   try {
     let token = localStorage.getItem("token");
     let partyId = localStorage.getItem("partyId");
+    console.log(token);
+    console.log(partyId);
+    console.log(data);
     const res = await fetch(`${endpoint}/partys/${partyId}/characters`, {
       method: "POST",
       headers: {
