@@ -9,7 +9,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import CommonButton from "../common/commonButton/CommonButton";
 import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
+//import Link from "@mui/material/Link";
 import { useAuth } from "../../actions/userActions/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
@@ -22,7 +22,7 @@ interface State {
 
 export default function Login() {
   let auth = useAuth();
-  let navigate = useNavigate();
+  //let navigate = useNavigate();
   const [values, setValues] = React.useState<State>({
     username: "",
     password: "",
@@ -48,7 +48,7 @@ export default function Login() {
     event.preventDefault();
   };
 
-  function signInClick(event: React.FormEvent<HTMLFormElement>) {
+  async function signInClick(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     auth.signin(values, false);
   }
@@ -101,7 +101,7 @@ export default function Login() {
       >
         Sign In
       </CommonButton>
-      <Link
+      {/* <Link
         onClick={() => {
           navigate("../register");
         }}
@@ -109,7 +109,7 @@ export default function Login() {
         sx={{ m: 1 }}
       >
         Create new account
-      </Link>
+      </Link> */}
     </Grid>
   );
 }

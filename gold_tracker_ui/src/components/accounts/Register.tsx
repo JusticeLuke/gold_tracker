@@ -48,9 +48,9 @@ export default function Register() {
     event.preventDefault();
   };
 
-  function registerClick(event: React.FormEvent<HTMLFormElement>) {
+  async function registerClick(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    auth.register(values);
+    await auth.register(values);
   }
 
   return (
