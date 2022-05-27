@@ -67,7 +67,11 @@ const PartyManager = () => {
   };
   return (
     <GridWrapper item xs={8} sx={{ margin: "auto" }}>
-      <BasicCard header={getSearchHeader()} content={getContent()} />
+      <BasicCard
+        header={getSearchHeader()}
+        content={getContent()}
+        sx={{ mt: "5px" }}
+      />
       <NewPartyModal
         open={open}
         onClose={() => {
