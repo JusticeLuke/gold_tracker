@@ -103,9 +103,9 @@ export default function Login() {
       </CommonButton>
       <Link
         onClick={() => {
-          navigate("../register/");
+          navigate("../register");
         }}
-        href="#"
+        href=""
         sx={{ m: 1 }}
       >
         Create new account
