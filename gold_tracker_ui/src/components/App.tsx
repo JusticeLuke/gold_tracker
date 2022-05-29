@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Navbar from "./navbar/Navbar";
 import { Outlet } from "react-router-dom";
 import Grid from "@mui/material/Grid";
