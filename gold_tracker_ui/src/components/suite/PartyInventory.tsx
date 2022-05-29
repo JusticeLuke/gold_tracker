@@ -65,11 +65,10 @@ const PartyInventory = () => {
       />
 
       <CharacterDataTable rows={getData()} />
-      <Grid container>
+      <Grid container sx={{ mt: "1%" }}>
         <LogCard />
-        <Grid item xs={8}>
-          <GraphsCard />
-        </Grid>
+
+        <GraphsCard />
       </Grid>
       <CommonButton
         sx={{ mt: 10 }}
