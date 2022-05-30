@@ -1,3 +1,5 @@
+import {createLog} from "../logActions/CRLog";
+
 const websiteUrl = window.location.href;
 const endpoint = websiteUrl.includes("witty-cliff")
   ? "https://goldtracker.azurewebsites.net"
@@ -59,6 +61,11 @@ export async function createParty(data: any) {
     if (res.statusText !== "Created") {
       throw new Error("Something went wrong.");
     }
+    const newParty= await res.json();
+    await createLog({name:"Party wealth update",
+    gold:newParty.anon_gold, silver:newParty.anon_silver, copper:newParty.anon_copper, 
+    entry:`Party starting wealth is ${newParty.anon_gold}g ${newParty.anon_silver}s ${newParty.anon_copper}c `, 
+    party_id:newParty.id})
     return true;
   } catch (error) {
     console.log(error);
@@ -89,7 +96,7 @@ export async function updateParty(data: any) {
   try {
     let token = localStorage.getItem("token");
     let partyId = localStorage.getItem("partyId");
-    await fetch(`${endpoint}/partys/${partyId}`, {
+    const res = await fetch(`${endpoint}/partys/${partyId}`, {
       method: "PUT",
       headers: {
         Accept: "application/json; indent=4",
@@ -98,6 +105,11 @@ export async function updateParty(data: any) {
       },
       body: JSON.stringify(data),
     });
+    const newParty= await res.json();
+    await createLog({name:"Party wealth update",
+    gold:newParty.anon_gold, silver:newParty.anon_silver, copper:newParty.anon_copper, 
+    entry:`New party wealth is ${newParty.anon_gold}g ${newParty.anon_silver}s ${newParty.anon_copper}c `, 
+    party_id:newParty.id})
     return true;
   } catch (error) {
     console.log(error);

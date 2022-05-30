@@ -6,8 +6,7 @@ const endpoint = websiteUrl.includes("witty-cliff")
 export async function createLog(data: any) {
   try {
     let token = localStorage.getItem("token");
-    let partyId = localStorage.getItem("partyId");
-    const res = await fetch(`${endpoint}/partys/${partyId}/log`, {
+    const res = await fetch(`${endpoint}/partys/${data.party_id}/log`, {
       method: "POST",
       headers: {
         Accept: "application/json; indent=4",
