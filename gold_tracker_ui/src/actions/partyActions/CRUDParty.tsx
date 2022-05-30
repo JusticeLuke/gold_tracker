@@ -85,7 +85,7 @@ export async function deleteParty() {
   }
 }
 
-export async function updateParty() {
+export async function updateParty(data: any) {
   try {
     let token = localStorage.getItem("token");
     let partyId = localStorage.getItem("partyId");
@@ -96,6 +96,7 @@ export async function updateParty() {
         "Content-Type": "application/json",
         Authorization: `Token ${token}`,
       },
+      body: JSON.stringify(data),
     });
     return true;
   } catch (error) {

@@ -6,16 +6,19 @@ import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import AddIcon from "@mui/icons-material/AddCircleOutline";
 import NewCharacterModal from "../modal/NewCharacterModal";
+import UpdatePartyModal from "../modal/UpdatePartyModal";
 import { deleteParty } from "../../actions/partyActions/CRUDParty";
 import { useNavigate } from "react-router-dom";
 import LogCard from "./inventoryComponents/LogCard";
 import GraphsCard from "./inventoryComponents/GraphsCard";
 import Grid from "@mui/material/Grid";
+import AddchartIcon from "@mui/icons-material/Addchart";
 
 const PartyInventory = () => {
   let navigate = useNavigate();
   const [characters, setCharacters] = React.useState<any>();
   const [open, setOpen] = React.useState(false);
+  const [openPartyWealth, setOpenPartyWealth] = React.useState(false);
 
   React.useEffect(() => {
     // Runs after the first render() lifecycle
@@ -24,6 +27,9 @@ const PartyInventory = () => {
 
   const addCharacterModal = () => {
     setOpen(true);
+  };
+  const updatePartyModal = () => {
+    setOpenPartyWealth(true);
   };
 
   const getData = () => {
@@ -52,10 +58,20 @@ const PartyInventory = () => {
         variant={"contained"}
         color={"primary"}
         title={"Add new character"}
-        placement={"right-end"}
+        placement={"bottom-end"}
         onClick={addCharacterModal}
       >
         <AddIcon />
+      </CommonButton>
+      <CommonButton
+        size={"small"}
+        variant={"contained"}
+        color={"primary"}
+        title={"Add wealth"}
+        placement={"bottom-end"}
+        onClick={updatePartyModal}
+      >
+        <AddchartIcon />
       </CommonButton>
       <NewCharacterModal
         open={open}
@@ -63,11 +79,16 @@ const PartyInventory = () => {
           setOpen(false);
         }}
       />
+      <UpdatePartyModal
+        open={openPartyWealth}
+        onClose={() => {
+          setOpenPartyWealth(false);
+        }}
+      />
 
       <CharacterDataTable rows={getData()} />
       <Grid container sx={{ mt: "1%" }}>
         <LogCard />
-
         <GraphsCard />
       </Grid>
       <CommonButton
