@@ -40,4 +40,4 @@ class CharacterSerializer(serializers.ModelSerializer):
 class LogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Log
-        fields = ["id", "entry", "gold", "silver", "copper", "time_created", "party_id"]
+        fields = ["id", "entry", "gold", "silver", "copper", "party_id"]

@@ -37,7 +37,6 @@ class Log(models.Model):
     silver = models.BigIntegerField(default=0)
     copper = models.BigIntegerField(default=0)
     entry = models.TextField()
-    time_created = models.TimeField()
     party_id = models.ForeignKey(
         Party,
         related_name="party_log",
