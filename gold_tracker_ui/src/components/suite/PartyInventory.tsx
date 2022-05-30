@@ -10,8 +10,6 @@ import UpdatePartyModal from "../modal/UpdatePartyModal";
 import { deleteParty } from "../../actions/partyActions/CRUDParty";
 import { useNavigate } from "react-router-dom";
 import LogCard from "./inventoryComponents/LogCard";
-import GraphsCard from "./inventoryComponents/GraphsCard";
-import Grid from "@mui/material/Grid";
 import AddchartIcon from "@mui/icons-material/Addchart";
 
 const PartyInventory = () => {
@@ -85,12 +83,9 @@ const PartyInventory = () => {
           setOpenPartyWealth(false);
         }}
       />
-
       <CharacterDataTable rows={getData()} />
-      <Grid container sx={{ mt: "1%" }}>
-        <LogCard />
-        <GraphsCard />
-      </Grid>
+      <LogCard />
+      
       <CommonButton
         sx={{ mt: 10 }}
         variant={"contained"}
