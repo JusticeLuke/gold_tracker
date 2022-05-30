@@ -16,6 +16,7 @@ export default function PartyDataTable(rows: any) {
   const navigate = useNavigate();
   const editPartyClick = async (row: any) => {
     localStorage.setItem("partyId", row.id);
+    localStorage.setItem("partyName", row.name);
     await getPartyCharacters();
     await getLog();
     navigate("inventory");
@@ -27,9 +28,9 @@ export default function PartyDataTable(rows: any) {
         <TableHead>
           <TableRow>
             <TableCell>Party Name</TableCell>
-            <TableCell align="right">Copper</TableCell>
-            <TableCell align="right">Silver</TableCell>
             <TableCell align="right">Gold</TableCell>
+            <TableCell align="right">Silver</TableCell>
+            <TableCell align="right">Copper</TableCell>
             <TableCell align="center">Manage Partys</TableCell>
           </TableRow>
         </TableHead>
@@ -42,9 +43,9 @@ export default function PartyDataTable(rows: any) {
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              <TableCell align="right">{row.anon_copper}</TableCell>
-              <TableCell align="right">{row.anon_silver}</TableCell>
               <TableCell align="right">{row.anon_gold}</TableCell>
+              <TableCell align="right">{row.anon_silver}</TableCell>
+              <TableCell align="right">{row.anon_copper}</TableCell>
               <TableCell align="center">
                 <CommonButton
                   variant={"contained"}
