@@ -4,6 +4,7 @@ import ListItemText from "@mui/material/ListItemText";
 import BasicCard from "../../common/basicCard/BasicCard";
 import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
+import GraphsCard from "./GraphsCard";
 
 const LogCard = () => {
   const [log, setLog] = React.useState<any>();
@@ -33,12 +34,18 @@ const LogCard = () => {
     );
   };
   return (
-    <Grid item xs={4}>
-      <BasicCard
-        content={getContent()}
-        header={"Party Log"}
-        sx={{ mr: "2%" }}
-      />
+    <Grid container sx={{ mt: "1%"}}>
+      <Grid item xs={4}>
+        <BasicCard
+          content={getContent()}
+          header={"Party Log"}
+          sx={{ mr: "2%" }}
+        />
+      
+      </Grid>
+      <Grid item xs={8}>
+        <GraphsCard logData={getLogData()}/>
+      </Grid>
     </Grid>
   );
 };
