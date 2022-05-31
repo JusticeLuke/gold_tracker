@@ -66,8 +66,8 @@ const GraphsCard = (logData: any) => {
       return `${entry.name} (${entry.wealth}g)`;
   }
     return (
-    <PieChart width={730} height={250}>
-      <Pie data={data} dataKey="wealth" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill="#8884d8" label={renderLabel} />
+    <PieChart width={700} height={500}>
+      <Pie data={data} dataKey="wealth" nameKey="name" cx="40%" cy="50%" outerRadius={100} fill="#8884d8" label={renderLabel} />
     </PieChart>
     );
   }
