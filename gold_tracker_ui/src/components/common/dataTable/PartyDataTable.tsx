@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { getPartyCharacters } from "../../../actions/characterActions/CRUDCharacter";
 import { getLog } from "../../../actions/logActions/CRLog";
 
-export default function PartyDataTable(rows: any) {
+export default function PartyDataTable(props: any) {
   const navigate = useNavigate();
   const editPartyClick = async (row: any) => {
     localStorage.setItem("partyId", row.id);
@@ -21,7 +21,7 @@ export default function PartyDataTable(rows: any) {
     await getLog();
     navigate("inventory");
   };
-
+  console.log(props.search);
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
@@ -35,28 +35,36 @@ export default function PartyDataTable(rows: any) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.rows.map((row: any) => (
-            <TableRow
-              key={row.id}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.anon_gold}</TableCell>
-              <TableCell align="right">{row.anon_silver}</TableCell>
-              <TableCell align="right">{row.anon_copper}</TableCell>
-              <TableCell align="center">
-                <CommonButton
-                  variant={"contained"}
-                  color={"primary"}
-                  onClick={() => editPartyClick(row)}
+          {props.rows.map((row: any) => {
+            console.log(row.name.includes(props.search));
+            if (
+              row.name.toLowerCase().includes(props.search) ||
+              props.search.trim() === ""
+            ) {
+              return (
+                <TableRow
+                  key={row.id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <EditIcon />
-                </CommonButton>
-              </TableCell>
-            </TableRow>
-          ))}
+                  <TableCell component="th" scope="row">
+                    {row.name}
+                  </TableCell>
+                  <TableCell align="right">{row.anon_gold}</TableCell>
+                  <TableCell align="right">{row.anon_silver}</TableCell>
+                  <TableCell align="right">{row.anon_copper}</TableCell>
+                  <TableCell align="center">
+                    <CommonButton
+                      variant={"contained"}
+                      color={"primary"}
+                      onClick={() => editPartyClick(row)}
+                    >
+                      <EditIcon />
+                    </CommonButton>
+                  </TableCell>
+                </TableRow>
+              );
+            }
+          })}
         </TableBody>
       </Table>
     </TableContainer>

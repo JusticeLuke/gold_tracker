@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BasicCard from "../common/basicCard/BasicCard";
 import SearchBar from "../common/searchBar/SearchBar";
 import Box from "@mui/material/Box";
@@ -8,12 +8,18 @@ import CommonButton from "../common/commonButton/CommonButton";
 import GridWrapper from "../common/gridWrapper/GridWrapper";
 import NewPartyModal from "../modal/NewPartyModal";
 import PartyDataTable from "../common/dataTable/PartyDataTable";
+import { getPartys } from "../../actions/partyActions/CRUDParty";
 
 const PartyManager = () => {
   const [open, setOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState<string>("");
+  useEffect(() => {
+    // Runs after the first render() lifecycle
+    getPartys();
+  });
   const getSearchHeader = () => {
     const handleChange = (value: any) => {
-      console.log(value);
+      setSearchValue(value);
     };
     const addPartyModal = () => {
       setOpen(true);
@@ -63,7 +69,7 @@ const PartyManager = () => {
       data = JSON.parse(partys);
     }
 
-    return <PartyDataTable rows={data} />;
+    return <PartyDataTable rows={data} search={searchValue} />;
   };
   return (
     <GridWrapper item xs={8} sx={{ margin: "auto" }}>
