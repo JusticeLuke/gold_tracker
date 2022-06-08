@@ -11,6 +11,8 @@ import { deleteParty } from "../../actions/partyActions/CRUDParty";
 import { useNavigate } from "react-router-dom";
 import LogCard from "./inventoryComponents/LogCard";
 import AddchartIcon from "@mui/icons-material/Addchart";
+import { getPartyCharacters } from "../../actions/characterActions/CRUDCharacter";
+import { getLog } from "../../actions/logActions/CRLog";
 
 const PartyInventory = () => {
   let navigate = useNavigate();
@@ -20,6 +22,8 @@ const PartyInventory = () => {
 
   React.useEffect(() => {
     // Runs after the first render() lifecycle
+    getPartyCharacters();
+    getLog();
     setCharacters(localStorage.getItem("characters"));
   }, []);
 
@@ -85,13 +89,14 @@ const PartyInventory = () => {
       />
       <CharacterDataTable rows={getData()} />
       <LogCard />
-      
+
       <CommonButton
         sx={{ mt: 10 }}
         variant={"contained"}
         color={"primary"}
         onClick={() => {
           deleteParty();
+          navigate("../partys");
         }}
       >
         DELETE PARTY
