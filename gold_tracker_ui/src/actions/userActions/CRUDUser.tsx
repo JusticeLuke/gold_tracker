@@ -3,7 +3,7 @@ const endpoint = websiteUrl.includes("witty-cliff")
   ? "https://goldtracker.azurewebsites.net"
   : "http://localhost:8000";
 
-//Create a new user
+//Create a new user, and returns json of response
 export async function createUser(data: any) {
   try {
     const res = await fetch(`${endpoint}/api/v1/users/`, {
@@ -16,12 +16,14 @@ export async function createUser(data: any) {
     if (res.statusText !== "Created") {
       throw new Error("Something went wrong.");
     }
-    return true;
+    const userJson = await res.json();
+    return userJson;
   } catch (error) {
     console.log(error);
-    return false;
+    //return error component;
   }
 }
+
 //Get user using login credintials
 export async function login(data: any) {
   try {
@@ -37,7 +39,7 @@ export async function login(data: any) {
     }
     const json = await res.json();
     localStorage.setItem("token", json.auth_token);
-
+    //Get user using token set in localStorage
     const userJson = await getUser(localStorage.getItem("token"));
     return userJson;
   } catch (error) {
@@ -48,6 +50,7 @@ export async function login(data: any) {
 //Get user using token
 export async function getUser(token: any) {
   try {
+    //Get username
     const userRes = await fetch(`${endpoint}/api/v1/users/me`, {
       method: "GET",
       headers: {
@@ -57,7 +60,7 @@ export async function getUser(token: any) {
     });
     const userJson = await userRes.json();
     localStorage.setItem("username", userJson.username);
-
+    //Get user id <- I dont understand why I make a serperate request to get id
     const idRes = await fetch(`${endpoint}/id`, {
       method: "GET",
       headers: {

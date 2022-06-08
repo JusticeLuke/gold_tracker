@@ -1,11 +1,13 @@
 import {createLog} from "../logActions/CRLog";
 
+//Reads the current url field, and sets endpoint to the production server
+//or the local host
 const websiteUrl = window.location.href;
 const endpoint = websiteUrl.includes("witty-cliff")
   ? "https://goldtracker.azurewebsites.net"
   : "http://localhost:8000";
 
-//Get users partys
+//Returns all of one user's partys, and saves them to local storage
 export async function getPartys() {
   try {
     let partysArray = [];
@@ -45,7 +47,7 @@ export async function getPartys() {
   }
 }
 
-//Create new party
+//Creates a new party, returns json o response and a log entry based on the wealth data
 export async function createParty(data: any) {
   try {
     let token = localStorage.getItem("token");
@@ -62,20 +64,24 @@ export async function createParty(data: any) {
       throw new Error("Something went wrong.");
     }
     const newParty= await res.json();
+
+    //Populates party's log with starting wealth values
     await createLog({name:"Party wealth update",
     gold:newParty.anon_gold, silver:newParty.anon_silver, copper:newParty.anon_copper, 
     entry:`Party starting wealth is ${newParty.anon_gold}g ${newParty.anon_silver}s ${newParty.anon_copper}c `, 
     party_id:newParty.id})
-    return true;
+    return newParty;
   } catch (error) {
     console.log(error);
-    return false;
+    //return error component;
   }
 }
 
+//Deletes party, returns true or false if the request suceeds.
 export async function deleteParty() {
   try {
     let token = localStorage.getItem("token");
+    //PartyId should be set by passing a parameter.
     let partyId = localStorage.getItem("partyId");
     await fetch(`${endpoint}/partys/${partyId}`, {
       method: "DELETE",
@@ -92,6 +98,7 @@ export async function deleteParty() {
   }
 }
 
+//Updates party with given values, and calls createLog to record changes
 export async function updateParty(data: any) {
   try {
     let token = localStorage.getItem("token");
@@ -106,13 +113,15 @@ export async function updateParty(data: any) {
       body: JSON.stringify(data),
     });
     const newParty= await res.json();
+    
+    //Create log entry to record changes to party gold
     await createLog({name:"Party wealth update",
     gold:newParty.anon_gold, silver:newParty.anon_silver, copper:newParty.anon_copper, 
     entry:`New party wealth is ${newParty.anon_gold}g ${newParty.anon_silver}s ${newParty.anon_copper}c `, 
     party_id:newParty.id})
-    return true;
+    return newParty;
   } catch (error) {
     console.log(error);
-    return false;
+    //return error component;
   }
 }

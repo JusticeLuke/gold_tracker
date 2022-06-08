@@ -3,14 +3,11 @@ const endpoint = websiteUrl.includes("witty-cliff")
   ? "https://goldtracker.azurewebsites.net"
   : "http://localhost:8000";
 
-//Creates a new character
+//Creates a new character and returns the json response
 export async function createCharacter(data: any) {
   try {
     let token = localStorage.getItem("token");
     let partyId = localStorage.getItem("partyId");
-    console.log(token);
-    console.log(partyId);
-    console.log(data);
     const res = await fetch(`${endpoint}/partys/${partyId}/characters`, {
       method: "POST",
       headers: {
@@ -23,7 +20,8 @@ export async function createCharacter(data: any) {
     if (res.statusText !== "Created") {
       throw new Error("Something went wrong.");
     }
-    return true;
+    const characterJson = await res.json();
+    return characterJson;
   } catch (error) {
     console.log(error);
     return false;
@@ -46,13 +44,15 @@ export async function getPartyCharacters() {
         },
       }
     );
-
+    
+    //Gets json response and pushes results into the party array.
     let partyCharactersJson = await partyCharactersRes.json();
     let pageNum = 2;
     for (let x = 0; x < partyCharactersJson.results.length; x++) {
       partyCharactersArray.push(partyCharactersJson.results[x]);
     }
-    //Gets next pages and adds it to local storage if intial request returns multiple pages
+    //If the response has a next page, requests the next page and
+    //pushes response results into the party array
     while (partyCharactersJson.next) {
       let nextPageRes = await fetch(`${endpoint}/user-partys?page=${pageNum}`, {
         method: "GET",
@@ -67,15 +67,16 @@ export async function getPartyCharacters() {
         partyCharactersArray.push(partyCharactersJson.results[x]);
       }
     }
-
+    //Save party array as a string in local storage, and return the json response
     localStorage.setItem("characters", JSON.stringify(partyCharactersArray));
     return partyCharactersJson;
   } catch (error) {
     console.log(error);
+    //return error component
   }
 }
 
-//Gets character matching id
+//Returns character matching id
 export async function getCharacter(id: number) {
   try {
     let token = localStorage.getItem("token");
@@ -99,12 +100,13 @@ export async function getCharacter(id: number) {
   }
 }
 
-//Needs testing
+//Updates character with the provided values. 
+//Character id is passed with data
 export async function updateCharacter(data: any) {
   try {
     let token = localStorage.getItem("token");
     let partyId = localStorage.getItem("partyId");
-    await fetch(`${endpoint}/partys/${partyId}/characters/${data.id}`, {
+    const res = await fetch(`${endpoint}/partys/${partyId}/characters/${data.id}`, {
       method: "PUT",
       headers: {
         Accept: "application/json; indent=4",
@@ -113,14 +115,15 @@ export async function updateCharacter(data: any) {
       },
       body: JSON.stringify(data),
     });
-    return true;
+    const characterJson = res.json();
+    return characterJson;
   } catch (error) {
     console.log(error);
-    return false;
+    //return error component;
   }
 }
 
-//Deletes character matching id
+//Deletes character matching id. Returns true/false
 export async function deleteCharacter(id: number) {
   try {
     let token = localStorage.getItem("token");
