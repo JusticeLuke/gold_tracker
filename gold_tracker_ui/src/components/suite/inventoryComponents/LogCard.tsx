@@ -26,7 +26,7 @@ const LogCard = () => {
     return (
       <List>
         {logData.map((row: any) => (
-          <ListItem>
+          <ListItem key={row.id}>
             <ListItemText primary={"> " + row.entry}> </ListItemText>
           </ListItem>
         ))}
@@ -34,17 +34,16 @@ const LogCard = () => {
     );
   };
   return (
-    <Grid container sx={{ mt: "1%"}}>
+    <Grid container sx={{ mt: "1%" }}>
       <Grid item xs={4}>
         <BasicCard
           content={getContent()}
           header={"Party Log"}
           sx={{ mr: "2%" }}
         />
-      
       </Grid>
       <Grid item xs={8}>
-        <GraphsCard logData={getLogData()}/>
+        <GraphsCard logData={getLogData()} />
       </Grid>
     </Grid>
   );

@@ -2,15 +2,14 @@ import * as React from "react";
 import BasicCard from "../../common/basicCard/BasicCard";
 import Link from "@mui/material/Link";
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
-import { PieChart, Pie} from "recharts";
-import { BarChart, Bar, Legend} from "recharts";
+import { PieChart, Pie } from "recharts";
+import { BarChart, Bar, Legend } from "recharts";
 import { Typography } from "@mui/material";
-import Tooltip from "recharts";
 
 const GraphsCard = (logData: any) => {
   const [graph, setGraph] = React.useState("line");
   const [characters, setCharacters] = React.useState<string | null>();
-  
+
   React.useEffect(() => {
     // Runs after the first render() lifecycle
     setCharacters(localStorage.getItem("characters"));
@@ -24,84 +23,100 @@ const GraphsCard = (logData: any) => {
     return characterData;
   };
   const getWealth = (row: any, personal: boolean) => {
-    let gold =0;
-    let silver=0;
-    let copper=0;
-    console.log(row);
-    if(row.gold && personal === false){
-      gold= Number(row.gold);
-      silver= Number(row.silver)/10;
-      copper= Number(row.copper)/100;
-    }else if(row.tribute_gold && personal === false){
-      gold= Number(row.tribute_gold);
-      silver= Number(row.tribute_silver)/10;
-      copper= Number(row.tribute_copper)/100; 
-    }else if(row.personal_gold && personal === true){
-      gold= Number(row.personal_gold);
-      silver= Number(row.personal_silver)/10;
-      copper= Number(row.personal_copper)/100; 
+    let gold = 0;
+    let silver = 0;
+    let copper = 0;
+
+    if (row.gold && personal === false) {
+      gold = Number(row.gold);
+      silver = Number(row.silver) / 10;
+      copper = Number(row.copper) / 100;
+    } else if (row.tribute_gold && personal === false) {
+      gold = Number(row.tribute_gold);
+      silver = Number(row.tribute_silver) / 10;
+      copper = Number(row.tribute_copper) / 100;
+    } else if (row.personal_gold && personal === true) {
+      gold = Number(row.personal_gold);
+      silver = Number(row.personal_silver) / 10;
+      copper = Number(row.personal_copper) / 100;
     }
-    return gold+silver+copper;
-  }
+    return gold + silver + copper;
+  };
 
   const renderPieChart = () => {
     let data: any[] = [];
     const characters = getData();
-    characters.map((row: any) =>{
-      data.push({name: row.name, wealth: getWealth(row, false)})
+    characters.map((row: any) => {
+      data.push({ name: row.name, wealth: getWealth(row, false) });
       return null;
     });
     //Get last update of party wealth and add to the dataset
-    let lastUpdateIndex = logData.logData.length-1;
-    while(lastUpdateIndex >= 0){
+    let lastUpdateIndex = logData.logData.length - 1;
+    while (lastUpdateIndex >= 0) {
       let type = logData.logData[lastUpdateIndex].entry.toLowerCase();
-      if(type.includes("party")){
+      if (type.includes("party")) {
         break;
-      }else{
+      } else {
         lastUpdateIndex--;
       }
-    } 
-    data.push({name:"Party", wealth: getWealth(logData.logData[lastUpdateIndex],false)})
+    }
+    data.push({
+      name: "Party",
+      wealth: getWealth(logData.logData[lastUpdateIndex], false),
+    });
     let renderLabel = (entry: any) => {
       return `${entry.name} (${entry.wealth}g)`;
-  }
+    };
     return (
-    <PieChart width={700} height={500}>
-      <Pie data={data} dataKey="wealth" nameKey="name" cx="40%" cy="50%" outerRadius={100} fill="#8884d8" label={renderLabel} />
-    </PieChart>
+      <PieChart width={700} height={500}>
+        <Pie
+          data={data}
+          dataKey="wealth"
+          nameKey="name"
+          cx="40%"
+          cy="50%"
+          outerRadius={100}
+          fill="#8884d8"
+          label={renderLabel}
+        />
+      </PieChart>
     );
-  }
+  };
 
   const renderBarChart = () => {
     let data: any[] = [];
     const characters = getData();
-    characters.map((row: any) =>{
-      data.push({name: row.name, personal:getWealth(row,true), contributions: getWealth(row,false)})
+    characters.map((row: any) => {
+      data.push({
+        name: row.name,
+        personal: getWealth(row, true),
+        contributions: getWealth(row, false),
+      });
       return null;
-    });    
-  
+    });
+
     return (
       <BarChart width={500} height={250} data={data}>
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" />
-      <YAxis />
-      <Legend />
-      <Bar dataKey="contributions" fill="#8884d8" />
-      <Bar dataKey="personal" fill="#82ca9d" />
-    </BarChart>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Legend />
+        <Bar dataKey="contributions" fill="#8884d8" />
+        <Bar dataKey="personal" fill="#82ca9d" />
+      </BarChart>
     );
-  }
+  };
 
   //Formats logData for line graph
   const renderLineChart = () => {
     let data: any[] = [];
-    logData.logData.map((row: any) =>{
-    let type = row.entry.toLowerCase();
-    if(type.includes("party")){
-      data.push({wealth: getWealth(row, false)})
-    }
-    return null;
-    });  
+    logData.logData.map((row: any) => {
+      let type = row.entry.toLowerCase();
+      if (type.includes("party")) {
+        data.push({ wealth: getWealth(row, false) });
+      }
+      return null;
+    });
 
     return (
       <LineChart
@@ -115,28 +130,50 @@ const GraphsCard = (logData: any) => {
         <XAxis />
         <YAxis />
       </LineChart>
-      )
+    );
   };
 
   const getContent = () => {
-    if(graph === "line"){
+    if (graph === "line") {
       return renderLineChart();
-    }else if(graph === "bar"){
+    } else if (graph === "bar") {
       return renderBarChart();
-    }else if(graph === "pie"){
+    } else if (graph === "pie") {
       return renderPieChart();
     }
-   
   };
 
   const getHeader = () => {
-      return (<Typography ><Link onClick={()=>{setGraph("line")}}>Party Gold Over Time</Link> || <Link onClick={()=>{setGraph("pie");setCharacters(localStorage.getItem("characters"));}}>Party Pie Chart</Link> || <Link onClick={()=>{setGraph("bar");setCharacters(localStorage.getItem("characters"));}}>Party Bar Chart</Link></Typography>);
-  }
-  return (
-      <BasicCard
-        content={getContent()}
-        header={getHeader()}
-      />
-  );
+    return (
+      <Typography>
+        <Link
+          onClick={() => {
+            setGraph("line");
+          }}
+        >
+          Party Gold Over Time
+        </Link>{" "}
+        ||{" "}
+        <Link
+          onClick={() => {
+            setGraph("pie");
+            setCharacters(localStorage.getItem("characters"));
+          }}
+        >
+          Party Pie Chart
+        </Link>{" "}
+        ||{" "}
+        <Link
+          onClick={() => {
+            setGraph("bar");
+            setCharacters(localStorage.getItem("characters"));
+          }}
+        >
+          Party Bar Chart
+        </Link>
+      </Typography>
+    );
+  };
+  return <BasicCard content={getContent()} header={getHeader()} />;
 };
 export default GraphsCard;
