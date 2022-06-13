@@ -71,6 +71,8 @@ urlpatterns = [
         views.LogViewSet.as_view(),
         name="log",
     ),
+    # Machine Learning function
+    path("predict", views.IRIS_Model_Predict.as_view()),
 ]
 
 urlpatterns += accounts_urlpatterns
