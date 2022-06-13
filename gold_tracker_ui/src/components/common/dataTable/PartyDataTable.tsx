@@ -63,6 +63,8 @@ export default function PartyDataTable(props: any) {
                   </TableCell>
                 </TableRow>
               );
+            } else {
+              return null;
             }
           })}
         </TableBody>
