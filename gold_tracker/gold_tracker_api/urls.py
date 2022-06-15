@@ -72,7 +72,7 @@ urlpatterns = [
         name="log",
     ),
     # Machine Learning function
-    path("predict", views.IRIS_Model_Predict.as_view()),
+    path("predict", views.Monster_Model_Predict.as_view()),
 ]
 
 urlpatterns += accounts_urlpatterns
