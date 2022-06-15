@@ -122,7 +122,7 @@ class Monster_Model_Predict(generics.ListCreateAPIView):
         loaded_model = load_model(loaded_classifier)
         predictions = predict_model(loaded_model, data=X)
         data["hp"] = predictions["Label"]
-        response_dict = {"Prediced HP": data["hp"]}
+        response_dict = {"Predicted_HP": data["hp"]}
         return Response(response_dict, status=200)
 
     # except:
