@@ -61,7 +61,7 @@ const defaultInputValues = {
 const MonsterGen = () => {
   const [values, setValues] = React.useState(defaultInputValues);
   const [hp, setHp] = React.useState();
-  const [acc, setAcc] = React.useState("");
+  const [acc, setAcc] = React.useState("--%");
 
   //Get model accuracy only on load
   const modelAcc = async () => {
