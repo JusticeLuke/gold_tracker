@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import BasicCard from "../common/basicCard/BasicCard";
 import SearchBar from "../common/searchBar/SearchBar";
 import Box from "@mui/material/Box";
-import RefreshIcon from "@mui/icons-material/Refresh";
-import IconButton from "@mui/material/IconButton";
 import CommonButton from "../common/commonButton/CommonButton";
 import GridWrapper from "../common/gridWrapper/GridWrapper";
 import NewPartyModal from "../modal/NewPartyModal";
@@ -54,9 +52,6 @@ const PartyManager = () => {
           >
             Add Party
           </CommonButton>
-          <IconButton>
-            <RefreshIcon />
-          </IconButton>
         </Box>
       </Box>
     );

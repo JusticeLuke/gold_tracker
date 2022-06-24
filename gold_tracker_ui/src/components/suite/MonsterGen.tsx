@@ -68,7 +68,6 @@ const MonsterGen = () => {
     let accuracy = await modelAccuracy();
     setAcc(accuracy);
   };
-  modelAcc();
 
   const handleChange = (value: any) => {
     setValues(value);
@@ -268,8 +267,18 @@ const MonsterGen = () => {
         >
           Predict HP
         </CommonButton>
+        <CommonButton
+          variant="contained"
+          onClick={() => {
+            modelAcc();
+          }}
+          size={"large"}
+        >
+          Compute Model Accuracy
+        </CommonButton>
         <Typography sx={formStyles.predict}>
-          Predicted HP(Model Accuracy {acc}): {hp}
+          Predicted HP: {hp}
+          Model Accuracy: {acc}
         </Typography>
       </Box>
     );
@@ -694,7 +703,7 @@ async function modelAccuracy() {
   accArray.map((num) => (avg += num));
   let avgFormat = new Intl.NumberFormat("en-en", {
     style: "percent",
-  }).format(avg / 9);
+  }).format(avg / expectedHP.length);
 
   return avgFormat;
 }

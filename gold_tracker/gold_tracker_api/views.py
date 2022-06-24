@@ -105,6 +105,3 @@ class Monster_Model_Predict(generics.ListCreateAPIView):
         data["hp"] = predictions["Label"]
         response_dict = {"Predicted_HP": data["hp"]}
         return Response(response_dict, status=200)
-
-    # except:
-    #     return Response("I do not know what is happening", status=500)
