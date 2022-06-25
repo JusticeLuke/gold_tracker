@@ -60,7 +60,7 @@ const defaultInputValues = {
 
 const MonsterGen = () => {
   const [values, setValues] = React.useState(defaultInputValues);
-  const [hp, setHp] = React.useState();
+  const [hp, setHp] = React.useState("--");
   const [acc, setAcc] = React.useState("--%");
 
   //Get model accuracy only on load
@@ -96,6 +96,10 @@ const MonsterGen = () => {
       fontStyle: "bold",
       margin: "2em",
     },
+    buttons: {
+      display: "block",
+      my:".5em",
+    }
   };
 
   const getContent = () => {
@@ -140,7 +144,7 @@ const MonsterGen = () => {
             }}
           >
             <MenuItem value={0}>TINY</MenuItem>
-            <MenuItem value={1}>SMAL</MenuItem>
+            <MenuItem value={1}>SMALL</MenuItem>
             <MenuItem value={2}>MEDIUM</MenuItem>
             <MenuItem value={3}>LARGE</MenuItem>
             <MenuItem value={4}>HUGE</MenuItem>
@@ -259,6 +263,7 @@ const MonsterGen = () => {
           />
         </FormGroup>
         <CommonButton
+          sx={formStyles.buttons}
           variant="contained"
           onClick={() => {
             handleSubmit();
@@ -268,16 +273,19 @@ const MonsterGen = () => {
           Predict HP
         </CommonButton>
         <CommonButton
+          sx={formStyles.buttons}
           variant="contained"
           onClick={() => {
             modelAcc();
           }}
-          size={"large"}
+          size={"small"}
         >
           Compute Model Accuracy
         </CommonButton>
         <Typography sx={formStyles.predict}>
           Predicted HP: {hp}
+        </Typography>
+        <Typography sx={formStyles.predict}>
           Model Accuracy: {acc}
         </Typography>
       </Box>
