@@ -5,6 +5,7 @@ import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
 import { PieChart, Pie } from "recharts";
 import { BarChart, Bar, Legend } from "recharts";
 import { Typography } from "@mui/material";
+import { Box } from "@mui/system";
 
 const GraphsCard = (logData: any) => {
   const [graph, setGraph] = React.useState("line");
@@ -68,18 +69,21 @@ const GraphsCard = (logData: any) => {
       return `${entry.name} (${entry.wealth}g)`;
     };
     return (
-      <PieChart width={700} height={500}>
-        <Pie
-          data={data}
-          dataKey="wealth"
-          nameKey="name"
-          cx="40%"
-          cy="50%"
-          outerRadius={100}
-          fill="#8884d8"
-          label={renderLabel}
-        />
-      </PieChart>
+      <Box>
+        <Typography>Displays party gold compared to gold contributions of each character</Typography>
+        <PieChart width={700} height={500}>
+          <Pie
+            data={data}
+            dataKey="wealth"
+            nameKey="name"
+            cx="40%"
+            cy="50%"
+            outerRadius={100}
+            fill="#8884d8"
+            label={renderLabel}
+          />
+        </PieChart>
+      </Box>
     );
   };
 
@@ -96,14 +100,17 @@ const GraphsCard = (logData: any) => {
     });
 
     return (
-      <BarChart width={500} height={250} data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Legend />
-        <Bar dataKey="contributions" fill="#8884d8" />
-        <Bar dataKey="personal" fill="#82ca9d" />
-      </BarChart>
+      <Box>
+        <Typography>Displays personal wealth compared to wealth contributed to the party</Typography>
+        <BarChart width={500} height={250} data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Legend />
+          <Bar dataKey="contributions" fill="#8884d8" />
+          <Bar dataKey="personal" fill="#82ca9d" />
+        </BarChart>
+      </Box>
     );
   };
 
@@ -119,17 +126,20 @@ const GraphsCard = (logData: any) => {
     });
 
     return (
-      <LineChart
-        width={600}
-        height={300}
-        data={data}
-        margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
-      >
-        <Line type="monotone" dataKey="wealth" stroke="#8884d8" />
-        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-        <XAxis />
-        <YAxis />
-      </LineChart>
+      <Box>
+        <Typography>Displays party gold over time</Typography>
+        <LineChart
+          width={600}
+          height={300}
+          data={data}
+          margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+        >
+          <Line type="monotone" dataKey="wealth" stroke="#8884d8" />
+          <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+          <XAxis />
+          <YAxis />
+        </LineChart>
+      </Box>
     );
   };
 
