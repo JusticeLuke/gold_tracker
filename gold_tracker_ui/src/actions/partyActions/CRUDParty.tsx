@@ -49,8 +49,10 @@ export async function getPartys() {
 
 //Creates a new party, returns json o response and a log entry based on the wealth data
 export async function createParty(data: any) {
+  
   try {
     let token = localStorage.getItem("token");
+    
     const res = await fetch(`${endpoint}/partys`, {
       method: "POST",
       headers: {
@@ -64,7 +66,7 @@ export async function createParty(data: any) {
       throw new Error("Something went wrong.");
     }
     const newParty= await res.json();
-
+    
     //Populates party's log with starting wealth values
     await createLog({name:"Party wealth update",
     gold:newParty.anon_gold, silver:newParty.anon_silver, copper:newParty.anon_copper, 

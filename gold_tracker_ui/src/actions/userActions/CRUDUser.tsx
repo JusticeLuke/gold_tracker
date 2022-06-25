@@ -17,6 +17,7 @@ export async function createUser(data: any) {
       throw new Error("Something went wrong.");
     }
     const userJson = await res.json();
+    console.log("Create user res: "+JSON.stringify(userJson));
     return userJson;
   } catch (error) {
     console.log(error);
@@ -41,6 +42,7 @@ export async function login(data: any) {
     localStorage.setItem("token", json.auth_token);
     //Get user using token set in localStorage
     const userJson = await getUser(localStorage.getItem("token"));
+    console.log("login res: " + JSON.stringify(userJson));
     return userJson;
   } catch (error) {
     console.log(error);
@@ -69,6 +71,7 @@ export async function getUser(token: any) {
       },
     });
     const idJson = await idRes.json();
+    console.log("getUser red: " + JSON.stringify(idJson));
     localStorage.setItem("id", idJson.results[0].id);
     return userJson;
   } catch (error) {
