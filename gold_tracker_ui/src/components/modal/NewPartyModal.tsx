@@ -137,6 +137,7 @@ const NewPartyModal = ({ open, onClose, handleSuccess }: any) => {
   //Clears inputs on modal close
   useEffect(() => {
     if (open) setValues(defaultInputValues);
+    setValues({...values, master: localStorage.getItem("id")});
   }, [open]);
 
   const getContent = () => {
