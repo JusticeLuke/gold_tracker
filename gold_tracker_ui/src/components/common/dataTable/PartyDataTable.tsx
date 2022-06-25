@@ -21,7 +21,6 @@ export default function PartyDataTable(props: any) {
     await getLog();
     navigate("inventory");
   };
-  console.log(props.search);
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
@@ -36,7 +35,6 @@ export default function PartyDataTable(props: any) {
         </TableHead>
         <TableBody>
           {props.rows.map((row: any) => {
-            console.log(row.name.includes(props.search));
             if (
               row.name.toLowerCase().includes(props.search) ||
               props.search.trim() === ""
