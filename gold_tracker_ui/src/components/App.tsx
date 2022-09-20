@@ -11,13 +11,10 @@ function App() {
   const [mode, setMode] = useState<PaletteMode>("dark");
   const darkModeTheme = createTheme(darkLight(mode));
   return (
-    <ThemeProvider theme={darkModeTheme}>
-      <CssBaseline enableColorScheme />
-      <Grid container>
-        <Navbar props={mode} />
-        <Outlet />
-      </Grid>
-    </ThemeProvider>
+    <Grid container>
+      <Navbar props={mode} />
+      <Outlet />
+    </Grid>
   );
 }
 
