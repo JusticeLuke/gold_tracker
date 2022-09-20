@@ -14,8 +14,6 @@ from gold_tracker.gold_tracker_api.serializers import (
     LogSerializer,
 )
 from .apps import GoldTrackerApiConfig
-import pandas as pd
-from pycaret.regression import *
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -90,18 +88,3 @@ class LogViewSet(generics.ListCreateAPIView):
     def get_queryset(self):
         uid = self.kwargs["fk"]
         return Log.objects.filter(party_id=uid)
-
-
-class Monster_Model_Predict(generics.ListCreateAPIView):
-    # permission_classes = [IsAuthenticated]
-    def post(self, request, format=None):
-
-        data = request.data
-        loaded_classifier = GoldTrackerApiConfig.MONSTER_FILE
-        print("Path to model: " + loaded_classifier)
-        X = pd.json_normalize(data)
-        loaded_model = load_model(loaded_classifier)
-        predictions = predict_model(loaded_model, data=X)
-        data["hp"] = predictions["Label"]
-        response_dict = {"Predicted_HP": data["hp"]}
-        return Response(response_dict, status=200)

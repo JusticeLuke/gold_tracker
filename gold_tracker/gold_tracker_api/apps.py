@@ -1,8 +1,5 @@
 from django.apps import AppConfig
-import pandas as pd
 from pathlib import Path
-from joblib import load
-import pickle
 import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
