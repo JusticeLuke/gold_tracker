@@ -161,7 +161,7 @@ const UpdatePartyModal = ({ open, onClose }: any) => {
     <BasicModal
       open={open}
       onClose={onClose}
-      title="New party"
+      title="New Party Wealth"
       subTitle=""
       content={getContent()}
       onSubmit={handleSubmit}

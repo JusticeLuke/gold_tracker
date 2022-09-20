@@ -58,7 +58,6 @@ const PartyInventory = () => {
       <CommonButton
         size={"small"}
         variant={"contained"}
-        color={"primary"}
         title={"Add new character"}
         placement={"bottom-end"}
         onClick={addCharacterModal}
@@ -68,7 +67,6 @@ const PartyInventory = () => {
       <CommonButton
         size={"small"}
         variant={"contained"}
-        color={"primary"}
         title={"Add wealth"}
         placement={"bottom-end"}
         onClick={updatePartyModal}
@@ -93,7 +91,6 @@ const PartyInventory = () => {
       <CommonButton
         sx={{ mt: 10 }}
         variant={"contained"}
-        color={"primary"}
         onClick={() => {
           deleteParty();
           navigate("../partys");

@@ -1,39 +1,73 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme, PaletteMode } from "@mui/material";
+import { teal, grey, amber } from "@mui/material/colors";
 
-export const AppTheme = createTheme({
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          fontSize: "0.875rem",
-          fontWeight: 600,
-          textTransform: "capitalize",
-          borderRadius: 2.5,
-          "&.MuiButton-contained": {
-            "&:hover": {},
-          },
-          "&.MuiButton-outlined": {
-            color: "#fff",
-            borderColor: "#fff",
-            "&:hover": {
-              backgroundColor: "transparent",
-            },
-          },
-        },
-      },
-    },
-  },
+export const darkLight = (mode: PaletteMode) => ({
   palette: {
-    primary: {
-      main: "#007766",
-    },
-    secondary: {
-      main: "#77004D",
-    },
+    mode,
+    ...(mode === "light"
+      ? {
+          // palette values for light mode
+          primary: amber,
+          divider: amber[200],
+          text: {
+            primary: grey[900],
+            secondary: grey[800],
+          },
+        }
+      : {
+          // palette values for dark mode
+          primary: teal,
+          divider: teal[900],
+          background: {
+            default: grey[900],
+            paper: grey[900],
+          },
+          text: {
+            primary: "#fff",
+            secondary: grey[500],
+          },
+        }),
   },
+});
+export const theme = createTheme({
   typography: {
     h1: {
-      fontSize: "1.6rem",
+      fontSize: "3.2rem",
+      fontWeight: 600,
+      color: "#fff",
+      letterSpacing: "0.5px",
+      textTransform: "capitalize",
+    },
+    h2: {
+      fontSize: "2.7rem",
+      fontWeight: 600,
+      color: "#fff",
+      letterSpacing: "0.5px",
+      textTransform: "capitalize",
+    },
+    h3: {
+      fontSize: "2.2rem",
+      fontWeight: 600,
+      color: "#fff",
+      letterSpacing: "0.5px",
+      textTransform: "capitalize",
+    },
+    h4: {
+      fontSize: "1.7rem",
+      fontWeight: 600,
+      color: "#fff",
+      letterSpacing: "0.5px",
+      textTransform: "capitalize",
+    },
+    h5: {
+      fontSize: "1.3rem",
+      fontWeight: 600,
+      color: "#fff",
+      letterSpacing: "0.5px",
+      textTransform: "capitalize",
+    },
+    h6: {
+      fontSize: "1rem",
       fontWeight: 600,
       color: "#fff",
       letterSpacing: "0.5px",

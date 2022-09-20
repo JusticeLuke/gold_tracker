@@ -55,7 +55,6 @@ export default function PartyDataTable(props: any) {
                   <TableCell align="center">
                     <CommonButton
                       variant={"contained"}
-                      color={"primary"}
                       onClick={() => editPartyClick(row)}
                     >
                       <EditIcon />

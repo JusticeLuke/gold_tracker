@@ -94,11 +94,7 @@ export default function Login() {
           label="Password"
         />
       </FormControl>
-      <CommonButton
-        variant={"contained"}
-        color={"primary"}
-        onClick={signInClick}
-      >
+      <CommonButton variant={"contained"} onClick={signInClick}>
         Sign In
       </CommonButton>
       <Link

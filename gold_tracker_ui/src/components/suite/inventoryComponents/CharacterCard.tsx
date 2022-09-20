@@ -75,7 +75,6 @@ export default function CharacterDataTable(row: any) {
         <Box sx={{ textAlign: "center" }}>
           <CommonButton
             variant={"contained"}
-            color={"primary"}
             title={"Manage personal wealth"}
             placement={"bottom-start"}
             onClick={handleWealth}
@@ -85,7 +84,6 @@ export default function CharacterDataTable(row: any) {
           <CommonButton
             sx={{ mx: "10px", my: "5px" }}
             variant={"contained"}
-            color={"primary"}
             title={"Contribute to party's shared gold"}
             placement={"bottom-start"}
             onClick={handleTribute}
@@ -94,7 +92,6 @@ export default function CharacterDataTable(row: any) {
           </CommonButton>
           <CommonButton
             variant={"contained"}
-            color={"primary"}
             title={"Delete character"}
             placement={"bottom-start"}
             onClick={() => deleteCharacter(character.id)}

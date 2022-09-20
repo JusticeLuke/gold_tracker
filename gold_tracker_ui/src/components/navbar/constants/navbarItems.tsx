@@ -10,12 +10,6 @@ export const mainNavbarItems = [
     label: "Gold Tracker",
     route: "partys",
   },
-  {
-    id: 1,
-    icon: <SettingsInputComponentIcon />,
-    label: "Monster Generator",
-    route: "monsterGen",
-  },
 ];
 
 export const userNavbarItems = [

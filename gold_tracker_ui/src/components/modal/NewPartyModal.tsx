@@ -119,7 +119,7 @@ const NewPartyModal = ({ open, onClose, handleSuccess }: any) => {
   };
 
   //Checks if any errors are active
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (
       errorValues.nameError === true ||
       errorValues.goldError === true ||

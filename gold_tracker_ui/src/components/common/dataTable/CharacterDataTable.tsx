@@ -39,7 +39,6 @@ export default function CharacterDataTable(rows: any) {
                 <TableCell align="center">
                   <CommonButton
                     variant={"contained"}
-                    color={"primary"}
                     onClick={() => {
                       handleSubmit(row);
                     }}

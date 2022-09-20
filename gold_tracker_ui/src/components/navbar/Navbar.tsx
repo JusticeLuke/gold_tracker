@@ -14,10 +14,15 @@ import CommonButton from "../common/commonButton/CommonButton";
 import { mainNavbarItems, userNavbarItems } from "./constants/navbarItems";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../actions/userActions/AuthProvider";
+import { useTheme } from "@mui/material/styles";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
 
-const Navbar = () => {
+const Navbar = (mode: any) => {
   const navigate = useNavigate();
   const auth = useAuth();
+  const theme = useTheme();
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -39,18 +44,19 @@ const Navbar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  console.log(theme.palette.mode);
+  const styles = {
+    navbar: {
+      backgroundColor: theme.palette.primary.main,
+    },
+  };
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={styles.navbar}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
-          >
-            LJ
-          </Typography>
+          <IconButton onClick={() => navigate("../")} sx={{ p: 0 }}>
+            <Avatar src="ljlogo.png" />
+          </IconButton>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -106,17 +112,23 @@ const Navbar = () => {
             {mainNavbarItems.map((item, index) => (
               <CommonButton
                 key={item.label}
+                color="inherit"
                 onClick={() => {
                   navigate(item.route);
                   handleCloseNavMenu();
                 }}
-                sx={{ my: 2, color: "white", display: "block" }}
               >
                 {item.label}
               </CommonButton>
             ))}
           </Box>
-
+          <IconButton sx={{ mr: 1 }} onClick={() => {}} color="inherit">
+            {theme.palette.mode === "dark" ? (
+              <Brightness7Icon />
+            ) : (
+              <Brightness4Icon />
+            )}
+          </IconButton>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

@@ -105,11 +105,7 @@ export default function Register() {
           label="Confirm Password"
         />
       </FormControl>
-      <CommonButton
-        variant={"contained"}
-        color={"primary"}
-        onClick={registerClick}
-      >
+      <CommonButton variant={"contained"} onClick={registerClick}>
         Register
       </CommonButton>
       <Link

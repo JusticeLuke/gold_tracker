@@ -8,6 +8,7 @@ media
 
 # Backup files # 
 *.bak 
+deprecatedComponents/*
 
 # If you are using PyCharm # 
 # User-specific stuff
