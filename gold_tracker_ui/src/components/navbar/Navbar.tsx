@@ -15,14 +15,19 @@ import { mainNavbarItems, userNavbarItems } from "./constants/navbarItems";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../actions/userActions/AuthProvider";
 import { useTheme } from "@mui/material/styles";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
+import { manageThemes } from "../../AppTheme";
+import ToggleButton from "../common/commonButton/ToggleButton";
+import { useState } from "react";
+import { createContext } from "vm";
 
-const Navbar = (mode: any) => {
+
+
+
+const Navbar = () => {
   const navigate = useNavigate();
   const auth = useAuth();
   const theme = useTheme();
-
+  
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -44,12 +49,13 @@ const Navbar = (mode: any) => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  console.log(theme.palette.mode);
+  
   const styles = {
     navbar: {
       backgroundColor: theme.palette.primary.main,
     },
   };
+
   return (
     <AppBar position="static" sx={styles.navbar}>
       <Container maxWidth="xl">
@@ -122,13 +128,7 @@ const Navbar = (mode: any) => {
               </CommonButton>
             ))}
           </Box>
-          <IconButton sx={{ mr: 1 }} onClick={() => {}} color="inherit">
-            {theme.palette.mode === "dark" ? (
-              <Brightness7Icon />
-            ) : (
-              <Brightness4Icon />
-            )}
-          </IconButton>
+          <ToggleButton/>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

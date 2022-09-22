@@ -1,5 +1,5 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React, { useState } from "react";
+import ReactDOM, { render } from "react-dom";
 import "./index.css";
 import App from "./components/App";
 import Login from "./components/accounts/Login";
@@ -8,18 +8,22 @@ import PartyManager from "./components/suite/PartyManager";
 import PartyInventory from "./components/suite/PartyInventory";
 import Welcome from "./components/suite/Welcome";
 import NoMatch from "./components/common/NoMatch";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { theme, darkLight } from "./AppTheme";
+import { ThemeProvider, createTheme, PaletteColor } from "@mui/material/styles";
+import { manageThemes, } from "./AppTheme";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { RequireAuth, AuthProvider } from "./actions/userActions/AuthProvider";
-import { CssBaseline } from "@mui/material";
+import { ThemeChangerProvider, useThemeChanger  } from "./ThemeChangerProvider";
+import { CssBaseline, PaletteMode } from "@mui/material";
 
-const darkModeTheme = createTheme(darkLight("dark"));
+render(
+  <Index />,
+  document.getElementById("root")
+);
 
-ReactDOM.render(
-  <React.Fragment>
-    <ThemeProvider theme={theme}>
-      <ThemeProvider theme={darkModeTheme}>
+function Index(){
+  return(
+    <React.Fragment>
+    <ThemeChangerProvider>     
         <CssBaseline enableColorScheme />
         <BrowserRouter>
           <AuthProvider>
@@ -49,8 +53,7 @@ ReactDOM.render(
             </Routes>
           </AuthProvider>
         </BrowserRouter>
-      </ThemeProvider>
-    </ThemeProvider>
-  </React.Fragment>,
-  document.getElementById("root")
-);
+  </ThemeChangerProvider>
+</React.Fragment> 
+  );
+}
