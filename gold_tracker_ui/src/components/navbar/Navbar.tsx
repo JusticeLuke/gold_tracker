@@ -15,10 +15,7 @@ import { mainNavbarItems, userNavbarItems } from "./constants/navbarItems";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../actions/userActions/AuthProvider";
 import { useTheme } from "@mui/material/styles";
-import { manageThemes } from "../../AppTheme";
 import ToggleButton from "../common/commonButton/ToggleButton";
-import { useState } from "react";
-import { createContext } from "vm";
 
 
 

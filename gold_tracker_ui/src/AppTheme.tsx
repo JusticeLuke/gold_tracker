@@ -1,7 +1,5 @@
 import { createTheme, PaletteMode } from "@mui/material";
 import { teal, grey, amber } from "@mui/material/colors";
-import { dark } from "@mui/material/styles/createPalette";
-import React, { createContext, Dispatch, SetStateAction, useContext, useState } from "react";
 
 export const manageThemes = (mode?: PaletteMode) => {
   if(mode === undefined){

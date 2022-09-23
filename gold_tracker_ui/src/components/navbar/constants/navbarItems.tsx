@@ -1,7 +1,6 @@
 import PeopleIcon from "@mui/icons-material/People";
 import ImageIcon from "@mui/icons-material/Image";
 import SettingsEthernetIcon from "@mui/icons-material/SettingsEthernet";
-import SettingsInputComponentIcon from "@mui/icons-material/SettingsInputComponent";
 
 export const mainNavbarItems = [
   {
