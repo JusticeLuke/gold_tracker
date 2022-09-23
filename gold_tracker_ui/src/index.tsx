@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import ReactDOM, { render } from "react-dom";
+import React from "react";
+import { render } from "react-dom";
 import "./index.css";
 import App from "./components/App";
 import Login from "./components/accounts/Login";
@@ -8,22 +8,17 @@ import PartyManager from "./components/suite/PartyManager";
 import PartyInventory from "./components/suite/PartyInventory";
 import Welcome from "./components/suite/Welcome";
 import NoMatch from "./components/common/NoMatch";
-import { ThemeProvider, createTheme, PaletteColor } from "@mui/material/styles";
-import { manageThemes, } from "./AppTheme";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { RequireAuth, AuthProvider } from "./actions/userActions/AuthProvider";
-import { ThemeChangerProvider, useThemeChanger  } from "./ThemeChangerProvider";
-import { CssBaseline, PaletteMode } from "@mui/material";
+import { ThemeChangerProvider } from "./ThemeChangerProvider";
+import { CssBaseline } from "@mui/material";
 
-render(
-  <Index />,
-  document.getElementById("root")
-);
+render(<Index />, document.getElementById("root"));
 
-function Index(){
-  return(
+function Index() {
+  return (
     <React.Fragment>
-    <ThemeChangerProvider>     
+      <ThemeChangerProvider>
         <CssBaseline enableColorScheme />
         <BrowserRouter>
           <AuthProvider>
@@ -53,7 +48,7 @@ function Index(){
             </Routes>
           </AuthProvider>
         </BrowserRouter>
-  </ThemeChangerProvider>
-</React.Fragment> 
+      </ThemeChangerProvider>
+    </React.Fragment>
   );
 }

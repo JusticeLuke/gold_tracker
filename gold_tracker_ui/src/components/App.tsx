@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import Navbar from "./navbar/Navbar";
 import { Outlet } from "react-router-dom";
 import Grid from "@mui/material/Grid";
-
 
 function App() {
   return (

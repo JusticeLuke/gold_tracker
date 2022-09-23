@@ -1,14 +1,10 @@
 import React from "react";
-import {
-  Box,
-  getOutlinedInputUtilityClass,
-  Grid,
-  Link,
-  Typography,
-} from "@mui/material";
+import { Box, Grid, Link, Typography } from "@mui/material";
 import Navbar from "../navbar/Navbar";
+import { useNavigate } from "react-router-dom";
 
 const Welcome = () => {
+  let navigate = useNavigate();
   const welcomeStlyes = {
     goldTrackerHeader: {
       color: "gold",
@@ -34,11 +30,30 @@ const Welcome = () => {
         </Typography>
         <Box sx={welcomeStlyes.welcomeBody}>
           GOLD_TRACKER is a tool for Game Masters to manage party and character
-          gold across multiple games. Track a party's gold over time, character
-          wealth, and maintain a log of changes to ensure the integrity of your
+          gold across multiple games. Track a party's gold, character wealth,
+          and maintain a log of gold changes to ensure the integrity of your
           games. <br />
           <br />
-          To get started <Link>CREATE AN ACCOUNT</Link> or <Link>LOGIN</Link>
+          To get started{" "}
+          <Link
+            onClick={() => {
+              navigate("../register");
+            }}
+            href=""
+          >
+            CREATE AN ACCOUNT
+          </Link>{" "}
+          or{" "}
+          <Link
+            onClick={() => {
+              navigate("../login");
+            }}
+            href=""
+          >
+            LOGIN
+          </Link>
+          <br />
+          <br />
         </Box>
       </Box>
     </Grid>
