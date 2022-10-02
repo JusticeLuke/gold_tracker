@@ -7,7 +7,7 @@ import { useThemeChanger } from "../../../ThemeChangerProvider";
 const ToggleButton = () => {
     const theme = useTheme();
     const themeChanger = useThemeChanger();
-    console.log(themeChanger.theme);
+    
     return(
         <IconButton sx={{ ml: 1 }} onClick={() => themeChanger.toggleTheme()} color="inherit">
             {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}

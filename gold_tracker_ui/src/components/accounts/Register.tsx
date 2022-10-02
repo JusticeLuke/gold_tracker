@@ -12,6 +12,11 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import { useAuth } from "../../actions/userActions/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from 'react-query';
+import { AxiosError } from "axios";
+import { createUser, getUser, login } from "../../actions/userActions/CRUDUser";
+import AlertMessage from "../common/alerts/AlertMessage";
+import { CircularProgress } from "@mui/material";
 
 interface State {
   username: string;
@@ -21,8 +26,22 @@ interface State {
 }
 
 export default function Register() {
-  let auth = useAuth();
   let navigate = useNavigate();
+  const { data, isLoading, isSuccess, isError, error, refetch } = useQuery<void, AxiosError>(
+    ['register'], 
+    async () => {const { data } = await createUser(values); return data;}, 
+    {
+    refetchOnWindowFocus: false,
+    enabled: false, // disable this query from automatically running
+    retry: false,
+    onSuccess: async (data: any) => {
+      const token = await login({
+        username: data.username,password:values.password});
+        getUser(token.data.auth_token);
+        navigate("../partys");
+      }
+    }
+  );
   const [values, setValues] = React.useState<State>({
     username: "",
     password: "",
@@ -50,7 +69,7 @@ export default function Register() {
 
   async function registerClick(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    await auth.register(values);
+    refetch();
   }
 
   return (
@@ -64,6 +83,7 @@ export default function Register() {
       }}
     >
       <h2>Register</h2>
+      <AlertMessage error={error} isError={isError} error400={"Invalid Username"}></AlertMessage>
       <TextField
         label="Username"
         id="outlined-start-adornment"
@@ -106,7 +126,7 @@ export default function Register() {
         />
       </FormControl>
       <CommonButton variant={"contained"} onClick={registerClick}>
-        Register
+      {isLoading ? <CircularProgress color='inherit'/> : 'Register'}
       </CommonButton>
       <Link
         onClick={() => {

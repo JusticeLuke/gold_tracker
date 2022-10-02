@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const websiteUrl = window.location.href;
 const endpoint = websiteUrl.includes("witty-cliff")
   ? "https://goldtracker.azurewebsites.net"
@@ -5,75 +7,25 @@ const endpoint = websiteUrl.includes("witty-cliff")
 
 //Create a new user, and returns json of response
 export async function createUser(data: any) {
-  try {
-    const res = await fetch(`${endpoint}/api/v1/users/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    if (res.statusText !== "Created") {
-      throw new Error("Something went wrong.");
-    }
-    const userJson = await res.json();
-    return userJson;
-  } catch (error) {
-    console.log(error);
-    //return error component;
-  }
+  const newUser = await axios.post(`${endpoint}/api/v1/users/`, data);
+  localStorage.setItem("token", (await newUser).data.auth_token);
+  return newUser;
 }
 
 //Get user using login credintials
-export async function login(data: any) {
-  try {
-    const res = await fetch(`${endpoint}/api/v1/token/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    if (res.status === 400 || res.status === 401) {
-      throw new Error("username or password do not match our records");
-    }
-    const json = await res.json();
-    localStorage.setItem("token", json.auth_token);
-    //Get user using token set in localStorage
-    const userJson = await getUser(localStorage.getItem("token"));
-    return userJson;
-  } catch (error) {
-    console.log(error);
-  }
+export async function login(data: any){
+  const login = axios.post(`${endpoint}/api/v1/token/login`,data);
+  localStorage.setItem("token", (await login).data.auth_token);
+  return login;
 }
 
 //Get user using token
 export async function getUser(token: any) {
-  try {
-    //Get username
-    const userRes = await fetch(`${endpoint}/api/v1/users/me`, {
-      method: "GET",
-      headers: {
-        Authorization: `Token ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
-    const userJson = await userRes.json();
-    localStorage.setItem("username", userJson.username);
-    //Get user id <- I dont understand why I make a serperate request to get id
-    const idRes = await fetch(`${endpoint}/id`, {
-      method: "GET",
-      headers: {
-        Authorization: `Token ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
-    const idJson = await idRes.json();
-    localStorage.setItem("id", idJson.results[0].id);
-    return userJson;
-  } catch (error) {
-    console.log(error);
-  }
+  const getUser = axios.get(`${endpoint}/api/v1/users/me`,{ headers: { Authorization: `Token ${token}` } }); 
+  localStorage.setItem("username", (await getUser).data.username);
+
+  const getUserId = axios.get(`${endpoint}/id`,{ headers: { Authorization: `Token ${token}` } });
+  localStorage.setItem('id',(await getUserId).data.results[0].id);
 }
 
 //Update user

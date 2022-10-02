@@ -1,3 +1,4 @@
+import axios from "axios";
 import {createLog} from "../logActions/CRLog";
 
 //Reads the current url field, and sets endpoint to the production server
@@ -8,7 +9,8 @@ const endpoint = websiteUrl.includes("witty-cliff")
   : "http://localhost:8000";
 
 //Returns all of one user's partys, and saves them to local storage
-export async function getPartys() {
+export async function getPartys(token: string) {
+  //const partys = await axios.get(`${endpoint}/user-partys`,{ headers: { Authorization: `Token ${token}` } });
   try {
     let partysArray = [];
     let token = localStorage.getItem("token");

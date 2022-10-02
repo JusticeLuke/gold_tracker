@@ -13,6 +13,7 @@ interface AuthContextType {
   signout: (callback: VoidFunction) => void;
 }
 
+
 //AuthProvider manages login/register/signout actions and their associated states
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   let [username, setUser] = React.useState<any>(null);
@@ -41,11 +42,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
   //Creates new user and navigates to the login page
   let register = async (data: any) => {
+    
     let success = await createUser(data);
     //If user exists navigate to the login page
-    if (success) {
-      navigate("../login");
-    }
+    console.log(typeof(success));
+    return success; 
   };
 
   let value = { username, userPartys, signin, token, signout, register };
@@ -72,3 +73,4 @@ export function RequireAuth({ children }: { children: JSX.Element }) {
 
   return children;
 }
+

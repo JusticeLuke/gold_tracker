@@ -12,7 +12,11 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import { useAuth } from "../../actions/userActions/AuthProvider";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from '@tanstack/react-query';
+import { useQuery } from 'react-query';
+import { getUser, login } from "../../actions/userActions/CRUDUser";
+import CircularProgress from '@mui/material/CircularProgress';
+import AlertMessage from '../common/alerts/AlertMessage';
+import { AxiosError, AxiosResponse } from "axios";
 
 interface State {
   username: string;
@@ -22,14 +26,26 @@ interface State {
 }
 
 export default function Login() {
-  let auth = useAuth();
   let navigate = useNavigate();
+  
   const [values, setValues] = React.useState<State>({
     username: "",
     password: "",
     showPassword: false,
     from: { pathname: "../partys" },
   });
+
+  const { data, isLoading, isSuccess, isError, error, refetch } = useQuery<void, AxiosError>(
+    ['login'], 
+    async () => {const {data} = await login(values);return data;}, 
+    {
+      refetchOnWindowFocus: false,
+      enabled: false, // disable this query from automatically running
+      retry: false,
+      onSuccess: (data: any) => {getUser(data.auth_token);navigate("../partys");}
+    }
+  );
+
 
   const handleChange =
     (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,9 +67,9 @@ export default function Login() {
 
   async function signInClick(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    auth.signin(values, false);
+    refetch();
   }
-
+  
   return (
     <Grid
       item
@@ -65,7 +81,7 @@ export default function Login() {
       }}
     >
       <h2>Login</h2>
-
+      <AlertMessage isError={isError} error={error} error400={"Invalid username or password"}></AlertMessage>
       <TextField
         label="Username"
         id="outlined-start-adornment"
@@ -96,7 +112,7 @@ export default function Login() {
         />
       </FormControl>
       <CommonButton variant={"contained"} onClick={signInClick}>
-        Sign In
+        {isLoading ? <CircularProgress color='inherit'/> : 'Sign In'}
       </CommonButton>
       <Link
         onClick={() => {
