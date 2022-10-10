@@ -10,13 +10,12 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import CommonButton from "../common/commonButton/CommonButton";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
-import { useAuth } from "../../actions/userActions/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from 'react-query';
 import { getUser, login } from "../../actions/userActions/CRUDUser";
 import CircularProgress from '@mui/material/CircularProgress';
 import AlertMessage from '../common/alerts/AlertMessage';
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosError } from "axios";
 
 interface State {
   username: string;
@@ -35,7 +34,7 @@ export default function Login() {
     from: { pathname: "../partys" },
   });
 
-  const { data, isLoading, isSuccess, isError, error, refetch } = useQuery<void, AxiosError>(
+  const { isLoading, isError, error, refetch } = useQuery<void, AxiosError>(
     ['login'], 
     async () => {const {data} = await login(values);return data;}, 
     {

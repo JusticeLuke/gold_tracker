@@ -16,7 +16,7 @@ const ToggleButton = () => {
 };
 
 export function ToggleColorMode() {
-  const [mode, setMode] = React.useState<'light' | 'dark'>('light');
+  const [mode] = React.useState<'light' | 'dark'>('light');
 
   return mode;
 }
