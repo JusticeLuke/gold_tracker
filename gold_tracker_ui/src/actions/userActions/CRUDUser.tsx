@@ -4,9 +4,15 @@ const websiteUrl = window.location.href;
 const endpoint = websiteUrl.includes("witty-cliff")
   ? "https://goldtracker.azurewebsites.net"
   : "http://localhost:8000";
+interface User {
+  username?: string;
+  password?: string;
+  userId?: string;
+  auth_token?: string;
+}
 
 //Create a new user, and returns json of response
-export async function createUser(data: any) {
+export async function createUser(data: User) {
   const newUser = await axios.post(`${endpoint}/api/v1/users/`, data);
   localStorage.setItem("token", (await newUser).data.auth_token);
   return newUser;
@@ -20,12 +26,12 @@ export async function login(data: any){
 }
 
 //Get user using token
-export async function getUser(token: any) {
+export async function getUser(token: string) {
   const getUser = axios.get(`${endpoint}/api/v1/users/me`,{ headers: { Authorization: `Token ${token}` } }); 
   localStorage.setItem("username", (await getUser).data.username);
 
   const getUserId = axios.get(`${endpoint}/id`,{ headers: { Authorization: `Token ${token}` } });
-  localStorage.setItem('id',(await getUserId).data.results[0].id);
+  localStorage.setItem('userId',(await getUserId).data.results[0].id);
 }
 
 //Update user

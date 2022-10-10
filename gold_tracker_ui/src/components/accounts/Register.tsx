@@ -10,7 +10,6 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import CommonButton from "../common/commonButton/CommonButton";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
-import { useAuth } from "../../actions/userActions/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from 'react-query';
 import { AxiosError } from "axios";
@@ -27,7 +26,7 @@ interface State {
 
 export default function Register() {
   let navigate = useNavigate();
-  const { data, isLoading, isSuccess, isError, error, refetch } = useQuery<void, AxiosError>(
+  const { isLoading, isSuccess, isError, error, refetch } = useQuery<void, AxiosError>(
     ['register'], 
     async () => {const { data } = await createUser(values); return data;}, 
     {
@@ -83,7 +82,7 @@ export default function Register() {
       }}
     >
       <h2>Register</h2>
-      <AlertMessage error={error} isError={isError} error400={"Invalid Username"}></AlertMessage>
+      <AlertMessage error={error} isError={isError} isSuccess={isSuccess}  error400={"Invalid Username"}></AlertMessage>
       <TextField
         label="Username"
         id="outlined-start-adornment"

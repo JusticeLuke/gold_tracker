@@ -2,14 +2,19 @@ import React, { useState, useEffect } from "react";
 import BasicModal from "../common/basicModal/BasicModal";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { createCharacter } from "../../actions/characterActions/CRUDCharacter";
+import { Character, createCharacter } from "../../actions/characterActions/CRUDCharacter";
+import { useAuth } from "../../actions/userActions/AuthProvider";
 
-const defaultInputValues = {
-  name: "",
-  personal_gold: 0,
-  personal_silver: 0,
-  personal_copper: 0,
-  party_id: localStorage.getItem("partyId"),
+const partyModalStyles = {
+  inputFields: {
+    display: "flex",
+    flexDirection: "column",
+    marginTop: "20px",
+    marginBottom: "15px",
+    ".MuiFormControl-root": {
+      marginBottom: "20px",
+    },
+  },
 };
 
 const defaultErrorValues = {
@@ -21,24 +26,21 @@ const defaultErrorValues = {
   silverHelperText: "",
   copperError: false,
   copperHelperText: "",
+  errorRemains: true
 };
 
 const NewCharacterModal = ({ open, onClose }: any) => {
-  const [values, setValues] = useState(defaultInputValues);
-
-  const [errorValues, setErrorValues] = useState(defaultErrorValues);
-
-  const partyModalStyles = {
-    inputFields: {
-      display: "flex",
-      flexDirection: "column",
-      marginTop: "20px",
-      marginBottom: "15px",
-      ".MuiFormControl-root": {
-        marginBottom: "20px",
-      },
-    },
+  let auth = useAuth();
+  const defaultInputValues = {
+    name: "",
+    personal_gold: '0',
+    personal_silver: '0',
+    personal_copper: '0',
+    party_id: auth.partyId,
   };
+
+  const [values, setValues] = useState<Character>(defaultInputValues);
+  const [errorValues, setErrorValues] = useState(defaultErrorValues);
 
   //Validates string user input
   /* eslint-disable */
@@ -114,25 +116,20 @@ const NewCharacterModal = ({ open, onClose }: any) => {
     }
   };
   //When input field has any change it validates the contents and sets the state to match the current input
-  const handleChange = (value: any) => {
+  const handleChange = (value: Character) => {
     setValues(value);
   };
 
   //Checks if any errors are active
   const handleSubmit = () => {
-    if (
-      errorValues.nameError === true ||
-      errorValues.goldError === true ||
-      errorValues.silverError === true ||
-      errorValues.copperError === true
-    ) {
-      console.log("AN ERROR STILL REMAINS");
-    } else {
-      //Passes values(party name, gold, etc..) as props
-      createCharacter(values);
-      return onClose();
-    }
+    createCharacter(values);
+    return onClose();
   };
+
+  errorValues.errorRemains = errorValues.nameError === true ||
+  errorValues.goldError === true ||
+  errorValues.silverError === true ||
+  errorValues.copperError === true ?  true : false;
 
   //Clears inputs on modal close
   useEffect(() => {
@@ -206,6 +203,7 @@ const NewCharacterModal = ({ open, onClose }: any) => {
       subTitle=""
       content={getContent()}
       onSubmit={handleSubmit}
+      error={errorValues.errorRemains}
     ></BasicModal>
   );
 };

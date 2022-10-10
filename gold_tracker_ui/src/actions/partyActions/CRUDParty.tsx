@@ -8,122 +8,72 @@ const endpoint = websiteUrl.includes("witty-cliff")
   ? "https://goldtracker.azurewebsites.net"
   : "http://localhost:8000";
 
+export interface Party{
+  partyId?: string | null;
+  name: string | null;
+  anon_gold: number;
+  anon_silver: number;
+  anon_copper: number;
+  userId: string | null;
+}
+
 //Returns all of one user's partys, and saves them to local storage
-export async function getPartys(token: string) {
-  //const partys = await axios.get(`${endpoint}/user-partys`,{ headers: { Authorization: `Token ${token}` } });
-  try {
-    let partysArray = [];
-    let token = localStorage.getItem("token");
-    const partysRes = await fetch(`${endpoint}/user-partys`, {
-      method: "GET",
-      headers: {
-        Authorization: `Token ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
-
-    let partysJson = await partysRes.json();
-    let pageNum = 2;
-    for (let x = 0; x < partysJson.results.length; x++) {
-      partysArray.push(partysJson.results[x]);
-    }
-    while (partysJson.next) {
-      let nextPageRes = await fetch(`${endpoint}/user-partys?page=${pageNum}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Token ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-      partysJson = await nextPageRes.json();
-      pageNum++;
-      for (let x = 0; x < partysJson.results.length; x++) {
-        partysArray.push(partysJson.results[x]);
-      }
-    }
-
-    localStorage.setItem("partys", JSON.stringify(partysArray));
-    return partysJson;
-  } catch (error) {
-    console.log(error);
+export async function getPartys(token: string | null) {
+  let partys = await axios.get(`${endpoint}/user-partys`,{ headers: { Authorization: `Token ${token}` } });
+  let allPartys: Party[] = partys.data.results;
+  
+  while(partys.data.next){
+    partys = await axios.get(partys.data.next,{ headers: { Authorization: `Token ${token}` } });
+    allPartys = [...allPartys, ...partys.data.results];
   }
+  return allPartys;
 }
 
 //Creates a new party, returns json o response and a log entry based on the wealth data
-export async function createParty(data: any) {
-  try {
-    let token = localStorage.getItem("token");
-    const res = await fetch(`${endpoint}/partys`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json; indent=4",
-        "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
-      },
-      body: JSON.stringify(data),
+export async function createParty(data: Party) {
+  let createParty = axios.post(`${endpoint}/partys`, data, {headers: {
+    Authorization: `Token ${localStorage.getItem('token')}`,}
     });
-    if (res.statusText !== "Created") {
-      throw new Error("Something went wrong.");
-    }
-    const newParty= await res.json();
-
+    console.log(createParty);
     //Populates party's log with starting wealth values
-    await createLog({name:"Party wealth update",
-    gold:newParty.anon_gold, silver:newParty.anon_silver, copper:newParty.anon_copper, 
-    entry:`Party starting wealth is ${newParty.anon_gold}g ${newParty.anon_silver}s ${newParty.anon_copper}c `, 
-    party_id:newParty.id})
-    return newParty;
-  } catch (error) {
-    console.log(error);
-    //return error component;
-  }
+    await createLog({
+      name:"Party wealth update",
+      gold:data.anon_gold, 
+      silver:data.anon_silver, 
+      copper:data.anon_copper, 
+      entry:`Intial party wealth: ${data.anon_gold}g ${data.anon_silver}s ${data.anon_copper}c `, 
+      party_id:null
+    });  
+
+    return createParty;
 }
 
 //Deletes party, returns true or false if the request suceeds.
-export async function deleteParty() {
-  try {
-    let token = localStorage.getItem("token");
-    //PartyId should be set by passing a parameter.
-    let partyId = localStorage.getItem("partyId");
-    await fetch(`${endpoint}/partys/${partyId}`, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json; indent=4",
-        "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
-      },
-    });
-    return true;
-  } catch (error) {
-    console.log(error);
-    return false;
+export async function deleteParty(partyId: string | null) {
+  if(partyId){
+    let deleteParty = axios.delete(`${endpoint}/partys/${partyId}`, {headers: {
+      Authorization: `Token ${localStorage.getItem('token')}`,
+    }});
+    return deleteParty;
+  }else{
+    console.log("Error: Party Id has been lost.");
   }
 }
 
 //Updates party with given values, and calls createLog to record changes
-export async function updateParty(data: any) {
-  try {
-    let token = localStorage.getItem("token");
-    let partyId = localStorage.getItem("partyId");
-    const res = await fetch(`${endpoint}/partys/${partyId}`, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json; indent=4",
-        "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
-      },
-      body: JSON.stringify(data),
-    });
-    const newParty= await res.json();
+export async function updateParty(partyId: string | null, data: Party) {
+  let updateParty = axios.put(`${endpoint}/partys/${partyId}`, data, {
+    headers:{
+      Authorization: `Token ${localStorage.getItem("token")}`
+    }
+  });
+  
     
     //Create log entry to record changes to party gold
     await createLog({name:"Party wealth update",
-    gold:newParty.anon_gold, silver:newParty.anon_silver, copper:newParty.anon_copper, 
-    entry:`New party wealth is ${newParty.anon_gold}g ${newParty.anon_silver}s ${newParty.anon_copper}c `, 
-    party_id:newParty.id})
-    return newParty;
-  } catch (error) {
-    console.log(error);
-    //return error component;
-  }
+    gold:data.anon_gold, silver:data.anon_silver, copper:data.anon_copper, 
+    entry:`New party wealth is ${data.anon_gold}g ${data.anon_silver}s ${data.anon_copper}c `, 
+    party_id:partyId});
+
+    return updateParty;
 }

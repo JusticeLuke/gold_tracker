@@ -3,13 +3,14 @@ import BasicModal from "../common/basicModal/BasicModal";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { createParty } from "../../actions/partyActions/CRUDParty";
+import { Party } from "../../actions/partyActions/CRUDParty";
 
 const defaultInputValues = {
   name: "",
   anon_gold: 0,
   anon_silver: 0,
   anon_copper: 0,
-  master: localStorage.getItem("id"),
+  userId: localStorage.getItem("userId"),
 };
 
 const defaultErrorValues = {
@@ -24,7 +25,7 @@ const defaultErrorValues = {
 };
 
 const NewPartyModal = ({ open, onClose, handleSuccess }: any) => {
-  const [values, setValues] = useState(defaultInputValues);
+  const [values, setValues] = useState<Party>(defaultInputValues);
 
   const [errorValues, setErrorValues] = useState(defaultErrorValues);
 

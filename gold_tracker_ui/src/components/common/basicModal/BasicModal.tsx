@@ -12,6 +12,7 @@ const BasicModal = ({
   subTitle,
   content,
   onSubmit,
+  error,
 }: any) => {
   return (
     <Modal open={open} onClose={onClose}>
@@ -22,7 +23,7 @@ const BasicModal = ({
         <Typography sx={{ mt: 2 }}>{subTitle}</Typography>
         {content}
         <Box sx={modalStyles.buttons}>
-          <CommonButton variant="contained" onClick={onSubmit}>
+          <CommonButton variant="contained" onClick={onSubmit} disabled={error}>
             Submit
           </CommonButton>
           <CommonButton onClick={onClose}>Cancel</CommonButton>

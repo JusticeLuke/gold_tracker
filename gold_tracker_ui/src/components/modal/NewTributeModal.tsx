@@ -175,7 +175,7 @@ const NewTributeModal = ({ open, onClose, character }: any) => {
           placeholder="0"
           name="tribute_gold"
           label={
-            "Maximum possible gold contribution: " + character.personal_gold
+            "Max possible gold tribute: " + character.personal_gold
           }
           value={tempValues.tempGold}
           onChange={(event) => {
@@ -202,7 +202,7 @@ const NewTributeModal = ({ open, onClose, character }: any) => {
           placeholder="0"
           name="tribute_silver"
           label={
-            "Maximum possible silver contribution: " + character.personal_silver
+            "Max possible silver tribute: " + character.personal_silver
           }
           value={tempValues.tempSilver}
           onChange={(event) => {
@@ -230,7 +230,7 @@ const NewTributeModal = ({ open, onClose, character }: any) => {
           placeholder="0"
           name="tribute_copper"
           label={
-            "Maximum possible copper contribution: " + character.personal_copper
+            "Max possible copper tribute: " + character.personal_copper
           }
           value={tempValues.tempCopper}
           onChange={(event) => {

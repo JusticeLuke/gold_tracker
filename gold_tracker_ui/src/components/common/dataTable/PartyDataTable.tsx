@@ -11,17 +11,22 @@ import CommonButton from "../commonButton/CommonButton";
 import { useNavigate } from "react-router-dom";
 import { getPartyCharacters } from "../../../actions/characterActions/CRUDCharacter";
 import { getLog } from "../../../actions/logActions/CRLog";
+import { Party } from "../../../actions/partyActions/CRUDParty";
 
-export default function PartyDataTable(props: any) {
+interface PartyTable{
+  userPartys: Party[];
+  search: string;
+}
+export default function PartyDataTable(props: PartyTable) {
   const navigate = useNavigate();
-  const editPartyClick = async (row: any) => {
-    localStorage.setItem("partyId", row.id);
-    localStorage.setItem("partyName", row.name);
+  
+  const editPartyClick = async (row: Party) => {
+    localStorage.setItem("partyId", row.partyId!);
+    localStorage.setItem("partyName", row.name!);
     await getPartyCharacters();
     await getLog();
     navigate("inventory");
   };
-  console.log(props.search);
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
@@ -35,10 +40,9 @@ export default function PartyDataTable(props: any) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.rows.map((row: any) => {
-            console.log(row.name.includes(props.search));
+          {props.userPartys.map((row: any) => {
             if (
-              row.name.toLowerCase().includes(props.search) ||
+              row.name.toLowerCase().includes(props.search.search) ||
               props.search.trim() === ""
             ) {
               return (
@@ -55,7 +59,7 @@ export default function PartyDataTable(props: any) {
                   <TableCell align="center">
                     <CommonButton
                       variant={"contained"}
-                      onClick={() => editPartyClick(row)}
+                      onClick={() => editPartyClick({...row, partyId: row.id})}
                     >
                       <EditIcon />
                     </CommonButton>

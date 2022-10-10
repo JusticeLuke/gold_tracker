@@ -2,10 +2,17 @@ const websiteUrl = window.location.href;
 const endpoint = websiteUrl.includes("witty-cliff")
   ? "https://goldtracker.azurewebsites.net"
   : "http://localhost:8000";
-
+interface Log {
+  name: string,
+  gold:number, 
+  silver:number, 
+  copper:number, 
+  entry:string, 
+  party_id:string | null,
+}
 //Create log entry with data provided.
 //Obtains party_id from the data provided
-export async function createLog(data: any) {
+export async function createLog(data: Log) {
   try {
     let token = localStorage.getItem("token");
     const res = await fetch(`${endpoint}/partys/${data.party_id}/log`, {

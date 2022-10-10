@@ -13,9 +13,11 @@ import LogCard from "./inventoryComponents/LogCard";
 import AddchartIcon from "@mui/icons-material/Addchart";
 import { getPartyCharacters } from "../../actions/characterActions/CRUDCharacter";
 import { getLog } from "../../actions/logActions/CRLog";
+import { useAuth } from "../../actions/userActions/AuthProvider";
 
 const PartyInventory = () => {
   let navigate = useNavigate();
+  let auth = useAuth();
   const [characters, setCharacters] = React.useState<any>();
   const [open, setOpen] = React.useState(false);
   const [openPartyWealth, setOpenPartyWealth] = React.useState(false);
@@ -92,7 +94,7 @@ const PartyInventory = () => {
         sx={{ mt: 10 }}
         variant={"contained"}
         onClick={() => {
-          deleteParty();
+          deleteParty(auth.partyId);
           navigate("../partys");
         }}
       >

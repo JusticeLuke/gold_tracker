@@ -4,13 +4,15 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { updateParty } from "../../actions/partyActions/CRUDParty";
 import { getPartys } from "../../actions/partyActions/CRUDParty";
+import { useAuth } from "../../actions/userActions/AuthProvider";
+import { Party } from "../../actions/partyActions/CRUDParty";
 
 const defaultInputValues = {
   name: localStorage.getItem("partyName"),
   anon_gold: 0,
   anon_silver: 0,
   anon_copper: 0,
-  master: localStorage.getItem("id"),
+  userId: localStorage.getItem("userId"),
 };
 
 const defaultErrorValues = {
@@ -23,8 +25,8 @@ const defaultErrorValues = {
 };
 
 const UpdatePartyModal = ({ open, onClose }: any) => {
-  const [values, setValues] = useState(defaultInputValues);
-
+  let auth = useAuth();
+  const [values, setValues] = useState<Party>(defaultInputValues);
   const [errorValues, setErrorValues] = useState(defaultErrorValues);
 
   const partyModalStyles = {
@@ -40,8 +42,8 @@ const UpdatePartyModal = ({ open, onClose }: any) => {
   };
 
   //Validate gold inputs
-  const validateGold = (value: any) => {
-    if (value < 0 || isNaN(value)) {
+  const validateGold = (gold: any) => {
+    if (gold < 0 || isNaN(gold)) {
       setErrorValues({
         ...errorValues,
         goldError: true,
@@ -57,8 +59,8 @@ const UpdatePartyModal = ({ open, onClose }: any) => {
   };
 
   //Validate silver inputs
-  const validateSilver = (value: any) => {
-    if (value < 0 || isNaN(value)) {
+  const validateSilver = (silver: any) => {
+    if (silver < 0 || isNaN(silver)) {
       setErrorValues({
         ...errorValues,
         silverError: true,
@@ -74,8 +76,8 @@ const UpdatePartyModal = ({ open, onClose }: any) => {
   };
 
   //Validate copper inputs
-  const validateCopper = (value: any) => {
-    if (value < 0 || isNaN(value)) {
+  const validateCopper = (copper: any) => {
+    if (copper < 0 || isNaN(copper)) {
       setErrorValues({
         ...errorValues,
         copperError: true,
@@ -104,8 +106,8 @@ const UpdatePartyModal = ({ open, onClose }: any) => {
       console.log("AN ERROR STILL REMAINS");
     } else {
       //Passes values(party name, gold, etc..) as props
-      updateParty(values);
-      getPartys();
+      updateParty(auth.partyId, values);
+      getPartys(localStorage.getItem('token'));
       return onClose();
     }
   };

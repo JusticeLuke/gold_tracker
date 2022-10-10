@@ -1,55 +1,59 @@
 import * as React from "react";
 import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { createUser, login } from "./CRUDUser";
-import { getPartys } from "../partyActions/CRUDParty";
 
 interface AuthContextType {
-  username: string;
-  token: string;
-  signin: any;
-  register: any;
-  userPartys: any;
+  userId: string | null;
+  setUserId: React.Dispatch<React.SetStateAction<string | null>> 
+  username: string | null;
+  setUsername: React.Dispatch<React.SetStateAction<string | null>>;
+  token: string | null;
+  setToken: React.Dispatch<React.SetStateAction<string | null>>;
+  partyId: string | null;
+  setPartyId: React.Dispatch<React.SetStateAction<string | null>>;
   signout: (callback: VoidFunction) => void;
 }
 
-
 //AuthProvider manages login/register/signout actions and their associated states
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  let [username, setUser] = React.useState<any>(null);
-  let [token, setAuthToken] = React.useState<any>(null);
-  let [userPartys, setUserPartys] = React.useState<any>(null);
+  let localToken = localStorage.getItem('token');
+  let localUsername = localStorage.getItem('username');
+  let localUserId = localStorage.getItem('userId')
+  let localPartyId = localStorage.getItem('partyId');
+
   let navigate = useNavigate();
 
-  //If user data is not saved in localStorage, login the user,
-  //set the relavent states, and navigate to the partys page
-  let signin = async (data: any, rememberMe: boolean) => {
-    if (!rememberMe) {
-      await login(data);
-    }
-    setAuthToken(localStorage.getItem("token"));
-    const userPartyJson = await getPartys();
-    setUserPartys(userPartyJson.results);
-    navigate("../partys");
-  };
-  //Signout clears local storage and state
+  let [username, setUsername] = React.useState<string | null>(localUsername);
+  let [userId, setUserId] = React.useState<string | null>(localUserId);
+  let [partyId, setPartyId] = React.useState<string | null>(localPartyId);
+  let [token, setToken] = React.useState<string | null>(localToken);  
+
+  React.useEffect(() => {
+    setToken(localStorage.getItem('token'));
+  },[localToken]);
+
+  React.useEffect(() => {
+    setUsername(localStorage.getItem('username'));
+  },[localUsername]);
+
+  React.useEffect(() => {
+    setPartyId(localStorage.getItem('partyId'));
+  },[localPartyId]);
+
+  React.useEffect(() => {
+    setPartyId(localStorage.getItem('userId'));
+  },[localUserId]);
+
   let signout = () => {
     localStorage.clear();
-    setUser(null);
-    setUserPartys(null);
-    setAuthToken(null);
+    setUserId(null);
+    setUsername(null);
+    setToken(null);
+    setPartyId(null);
     navigate("../login");
   };
-  //Creates new user and navigates to the login page
-  let register = async (data: any) => {
-    
-    let success = await createUser(data);
-    //If user exists navigate to the login page
-    console.log(typeof(success));
-    return success; 
-  };
 
-  let value = { username, userPartys, signin, token, signout, register };
+  let value = { username, userId, token, partyId, setUsername, setUserId, setToken, setPartyId, signout};
   //AuthContext.Provider gets wrapped around all components
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
@@ -64,10 +68,6 @@ export function useAuth() {
 export function RequireAuth({ children }: { children: JSX.Element }) {
   let auth = useAuth();
   if (!auth.token && !localStorage.getItem("token")) {
-    // Redirect them to the /login page, but save the current location they were
-    // trying to go to when they were redirected. This allows us to send them
-    // along to that page after they login, which is a nicer user experience
-    // than dropping them off on the home page.
     return <Navigate to="/login" replace />;
   }
 

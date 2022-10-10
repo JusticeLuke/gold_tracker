@@ -4,7 +4,8 @@ import { AxiosError } from "axios";
 
 interface AlertProps {
   isError?: boolean,
-  error?: AxiosError | null
+  isSuccess?: boolean,
+  error?: AxiosError | null,
   error400?: string | undefined
 }
 const AlertMessage = (props: AlertProps) => {
@@ -30,6 +31,9 @@ const AlertMessage = (props: AlertProps) => {
         severity="error";
         message="Internal Server Error";
       }
+    }else if(props.isSuccess){
+        severity='success'
+        message="Success!";
     }
 
     return (
