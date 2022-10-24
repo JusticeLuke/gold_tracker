@@ -14,7 +14,7 @@ export interface Party{
   anon_gold: number;
   anon_silver: number;
   anon_copper: number;
-  userId: string | null;
+  user_id: string | null;
 }
 
 //Returns all of one user's partys, and saves them to local storage
@@ -42,7 +42,7 @@ export async function createParty(data: Party) {
       silver:data.anon_silver, 
       copper:data.anon_copper, 
       entry:`Intial party wealth: ${data.anon_gold}g ${data.anon_silver}s ${data.anon_copper}c `, 
-      party_id:null
+      party_id:(await createParty).data.id
     });  
 
     return createParty;

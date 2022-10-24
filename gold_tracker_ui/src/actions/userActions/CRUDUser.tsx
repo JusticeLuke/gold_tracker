@@ -7,7 +7,7 @@ const endpoint = websiteUrl.includes("witty-cliff")
 interface User {
   username?: string;
   password?: string;
-  userId?: string;
+  user_id?: string;
   auth_token?: string;
 }
 

@@ -6,6 +6,7 @@ const endpoint = websiteUrl.includes("witty-cliff")
   : "http://localhost:8000";
 
 export interface Character {
+  id?: number;
   name: string;
   personal_gold: string;
   personal_silver: string;
@@ -74,19 +75,12 @@ export async function updateCharacter(data: any) {
 
 //Deletes character matching id. Returns true/false
 export async function deleteCharacter(id: number) {
-  try {
     let token = localStorage.getItem("token");
     let partyId = localStorage.getItem("partyId");
-    await fetch(`${endpoint}/partys/${partyId}/characters/${id}`, {
-      method: "DELETE",
+    let deleteCharacter = axios.delete(`${endpoint}/partys/${partyId}/characters/${id}`, {
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Token ${token}`,
-      },
+      }
     });
-    return true;
-  } catch (error) {
-    console.log(error);
-    return false;
-  }
+    return deleteCharacter;
 }
