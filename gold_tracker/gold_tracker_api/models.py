@@ -7,7 +7,7 @@ class Party(models.Model):
     anon_gold = models.BigIntegerField(default=0)
     anon_silver = models.BigIntegerField(default=0)
     anon_copper = models.BigIntegerField(default=0)
-    master = models.ForeignKey(
+    user_id = models.ForeignKey(
         User,
         related_name="partys",
         on_delete=models.CASCADE,

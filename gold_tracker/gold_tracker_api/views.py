@@ -14,6 +14,8 @@ from gold_tracker.gold_tracker_api.serializers import (
     LogSerializer,
 )
 from .apps import GoldTrackerApiConfig
+from gold_tracker.gold_tracker_api.permissions import IsOwnerOrReadOnly
+
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -23,12 +25,12 @@ class UserViewSet(viewsets.ModelViewSet):
 
     queryset = User.objects.all().order_by("-date_joined")
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
 
 
 class UserIdViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
 
     def get_queryset(self):
         user = self.request.user
@@ -42,28 +44,30 @@ class GroupViewSet(viewsets.ModelViewSet):
 
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
 
 
 class PartyViewSet(viewsets.ModelViewSet):
     queryset = Party.objects.all()
     serializer_class = PartySerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
 
 
 class UserPartysViewSet(viewsets.ModelViewSet):
     serializer_class = PartySerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
 
     def get_queryset(self):
         user = self.request.user
-        return Party.objects.filter(master=user)
+        obj = Party.objects.filter(user_id=user)
+        self.check_object_permissions(self.request, obj)
+        return obj
 
 
 # Create or Read characters matching party_id
 class CharacterViewSet(generics.ListCreateAPIView):
     serializer_class = CharacterSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
 
     def get_queryset(self):
         uid = self.kwargs["fk"]
@@ -73,7 +77,7 @@ class CharacterViewSet(generics.ListCreateAPIView):
 # Read Update or Delete character
 class ManageCharacterViewSet(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CharacterSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
 
     def get_queryset(self):
         uid = self.kwargs["pk"]
@@ -83,7 +87,7 @@ class ManageCharacterViewSet(generics.RetrieveUpdateDestroyAPIView):
 # Create or Read log matching party_id
 class LogViewSet(generics.ListCreateAPIView):
     serializer_class = LogSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
 
     def get_queryset(self):
         uid = self.kwargs["fk"]

@@ -35,7 +35,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class PartySerializer(serializers.ModelSerializer):
     class Meta:
         model = Party
-        fields = ["id", "name", "anon_gold", "anon_silver", "anon_copper", "master"]
+        fields = ["id", "name", "anon_gold", "anon_silver", "anon_copper", "user_id"]
         validators = [WealthValidator("Party")]
 
 
