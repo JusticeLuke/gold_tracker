@@ -3,6 +3,8 @@ import BasicModal from "../common/basicModal/BasicModal";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { updateCharacter } from "../../actions/characterActions/CRUDCharacter";
+import { useQuery } from "react-query";
+import { AxiosError } from "axios";
 
 const defaultErrorValues = {
   goldError: false,
@@ -26,7 +28,15 @@ const NewWealthModal = ({ open, onClose, character }: any) => {
   const [values, setValues] = useState(defaultInputValues);
 
   const [errorValues, setErrorValues] = useState(defaultErrorValues);
-
+  const { isLoading, isSuccess, isError, error, refetch } = useQuery<void, AxiosError>(
+    ['createParty'], 
+    async () => {const {data} = await updateCharacter(values);return data;}, 
+    {
+      refetchOnWindowFocus: false,
+      enabled: false, // disable this query from automatically running
+      retry: false,
+    }
+  );
   const partyModalStyles = {
     inputFields: {
       display: "flex",

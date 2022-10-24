@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BasicCard from "../common/basicCard/BasicCard";
 import SearchBar from "../common/searchBar/SearchBar";
 import Box from "@mui/material/Box";
@@ -13,6 +13,9 @@ import AlertMessage from "../common/alerts/AlertMessage";
 import { CircularProgress } from "@mui/material";
 
 const partyManagerStyles = {
+  partyContainer: {
+    mt: "1.5rem",
+  },
   wrapper: {
     display: "flex",
     alignItems: "center",
@@ -22,9 +25,6 @@ const partyManagerStyles = {
   },
   addParty: {
     fontSize: ".85rem",
-  },
-  partyContainer: {
-    marginTop: "60rem",
   },
   loading: {
     display: "flex",
@@ -36,10 +36,20 @@ const PartyManager = () => {
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState<string>("");
 
-  const { data, isLoading, isSuccess, isError, error } = useQuery<Party[], AxiosError>(
+  const { data, isLoading, isSuccess, isError, error, refetch } = useQuery<Party[], AxiosError>(
     ['getPartys'], 
-    async () => await getPartys(localStorage.getItem('token'))
+    async () => await getPartys(localStorage.getItem('token')),
+    {
+      refetchOnWindowFocus: false,
+    }
   );
+  
+  //Refetch query when modal closes
+  useEffect(() => {
+    if(open === false){
+      refetch();
+    }
+  },[open]);
 
   const getSearchHeader = () => {
     const handleChange = (value: any) => {
@@ -81,11 +91,11 @@ const PartyManager = () => {
     }
   };
   return (
-    <GridWrapper item xs={8} sx={partyManagerStyles.partyContainer}>
+    <GridWrapper item xs={8} >
       <BasicCard
         header={getSearchHeader()}
         content={getContent()}
-        sx={{ mt: "5px" }}
+        sx={partyManagerStyles.partyContainer}
       />
       <NewPartyModal
         open={open}

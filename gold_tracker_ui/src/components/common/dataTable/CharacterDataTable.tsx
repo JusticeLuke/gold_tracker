@@ -11,14 +11,18 @@ import CommonButton from "../commonButton/CommonButton";
 import CharacterCard from "../../suite/inventoryComponents/CharacterCard";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { Character } from "../../../actions/characterActions/CRUDCharacter";
 
-export default function CharacterDataTable(rows: any) {
-  const [character, setCharacter] = React.useState<any>();
+interface CharacterTable{
+  rows: Character[];
+}
+export default function CharacterDataTable(props: CharacterTable) {
+  const [character, setCharacter] = React.useState<Character>();
   const handleSubmit = (row: any) => {
     setCharacter(row);
   };
 
-  if (rows.rows.length > 0) {
+  if (props.rows.length > 0) {
     return (
       <TableContainer sx={{ display: "inline-flex" }} component={Paper}>
         <Table size="small" aria-label="a dense table">
@@ -28,7 +32,7 @@ export default function CharacterDataTable(rows: any) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.rows.map((row: any) => (
+            {props.rows.map((row: Character) => (
               <TableRow
                 key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

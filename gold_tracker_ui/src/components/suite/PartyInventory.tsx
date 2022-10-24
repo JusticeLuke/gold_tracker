@@ -11,9 +11,13 @@ import { deleteParty } from "../../actions/partyActions/CRUDParty";
 import { useNavigate } from "react-router-dom";
 import LogCard from "./inventoryComponents/LogCard";
 import AddchartIcon from "@mui/icons-material/Addchart";
-import { getPartyCharacters } from "../../actions/characterActions/CRUDCharacter";
+import { Character, getPartyCharacters } from "../../actions/characterActions/CRUDCharacter";
 import { getLog } from "../../actions/logActions/CRLog";
 import { useAuth } from "../../actions/userActions/AuthProvider";
+import { useQuery } from "react-query";
+import { AxiosError } from "axios";
+import AlertMessage from "../common/alerts/AlertMessage";
+import { CircularProgress } from "@mui/material";
 
 const PartyInventory = () => {
   let navigate = useNavigate();
@@ -22,6 +26,10 @@ const PartyInventory = () => {
   const [open, setOpen] = React.useState(false);
   const [openPartyWealth, setOpenPartyWealth] = React.useState(false);
 
+  const { data, isLoading, isSuccess, isError, error } = useQuery<Character[], AxiosError>(
+    ['getCharacters'], 
+    async () => await getPartyCharacters()
+  );
   React.useEffect(() => {
     // Runs after the first render() lifecycle
     getPartyCharacters();
@@ -36,12 +44,14 @@ const PartyInventory = () => {
     setOpenPartyWealth(true);
   };
 
-  const getData = () => {
-    let characterData = [];
-    if (characters != null) {
-      characterData = JSON.parse(characters);
-    }
-    return characterData;
+  const getCharacterData = () => {
+   if(isError){
+    return <AlertMessage error400="Unable to get characters" error={error} isError={isError} ></AlertMessage>
+   }else if(isLoading){
+    return <CircularProgress></CircularProgress>
+   }else if(isSuccess){
+    return <CharacterDataTable rows={data}></CharacterDataTable>
+   }
   };
 
   return (
@@ -87,7 +97,7 @@ const PartyInventory = () => {
           setOpenPartyWealth(false);
         }}
       />
-      <CharacterDataTable rows={getData()} />
+      {getCharacterData()}
       <LogCard />
 
       <CommonButton

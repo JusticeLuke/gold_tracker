@@ -4,13 +4,16 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { createParty } from "../../actions/partyActions/CRUDParty";
 import { Party } from "../../actions/partyActions/CRUDParty";
+import { useQuery } from "react-query";
+import { AxiosError } from "axios";
+import AlertMessage from "../common/alerts/AlertMessage";
 
 const defaultInputValues = {
   name: "",
   anon_gold: 0,
   anon_silver: 0,
   anon_copper: 0,
-  userId: localStorage.getItem("userId"),
+  user_id: localStorage.getItem("userId"),
 };
 
 const defaultErrorValues = {
@@ -28,7 +31,15 @@ const NewPartyModal = ({ open, onClose, handleSuccess }: any) => {
   const [values, setValues] = useState<Party>(defaultInputValues);
 
   const [errorValues, setErrorValues] = useState(defaultErrorValues);
-
+  const { isLoading, isSuccess, isError, error, refetch } = useQuery<void, AxiosError>(
+    ['createParty'], 
+    async () => {const {data} = await createParty(values);return data;}, 
+    {
+      refetchOnWindowFocus: false,
+      enabled: false, // disable this query from automatically running
+      retry: false,
+    }
+  );
   const partyModalStyles = {
     inputFields: {
       display: "flex",
@@ -130,8 +141,10 @@ const NewPartyModal = ({ open, onClose, handleSuccess }: any) => {
       console.log("AN ERROR STILL REMAINS");
     } else {
       //Passes values(party name, gold, etc..) as props
-      createParty(values);
-      return onClose();
+      await refetch();
+      if(isSuccess){
+        return onClose();
+      }
     }
   };
 
@@ -139,6 +152,11 @@ const NewPartyModal = ({ open, onClose, handleSuccess }: any) => {
   useEffect(() => {
     if (open) setValues(defaultInputValues);
   }, [open]);
+
+  //Clears inputs on modal close
+  useEffect(() => {
+    onClose();
+  }, [isSuccess]);
 
   const getContent = () => {
     return (
@@ -192,6 +210,7 @@ const NewPartyModal = ({ open, onClose, handleSuccess }: any) => {
           error={errorValues.copperError ? true : false}
           helperText={errorValues.copperHelperText}
         />
+        {isError ? <AlertMessage error={error} isError={isError} error400={"Error creating party"}></AlertMessage>:""}
       </Box>
     );
   };
@@ -203,6 +222,7 @@ const NewPartyModal = ({ open, onClose, handleSuccess }: any) => {
       subTitle=""
       content={getContent()}
       onSubmit={handleSubmit}
+      isLoading={isLoading}
     ></BasicModal>
   );
 };
